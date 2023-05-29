@@ -6,7 +6,7 @@ const NavBar = () => {
     <div>
         <AppBar>
             <Toolbar>
-                <Button></Button>
+                <Button >Login</Button>
             </Toolbar>
         </AppBar>
     </div>
