@@ -6,7 +6,8 @@ const NavBar = () => {
     <div>
         <AppBar>
             <Toolbar>
-                <Button >Login</Button>
+                <Button variant='contained'>Login</Button>
+                <Button variant='contained'>Sign Up</Button>
             </Toolbar>
         </AppBar>
     </div>
