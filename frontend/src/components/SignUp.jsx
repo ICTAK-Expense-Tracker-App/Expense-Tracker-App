@@ -3,6 +3,8 @@ import { Grid, Paper, Avatar, Typography, TextField, Button, FormControlLabel} f
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { CheckBox } from '@mui/icons-material';
 import './SignUp.css'
+import money1 from '../assets/money1.jpg';
+import './SignUp.css';
 
 const SignUp = () => {
     const paperStyle = { padding: 20, width: 300, margin: "0 auto" };
