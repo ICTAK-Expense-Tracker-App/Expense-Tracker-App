@@ -1,8 +1,9 @@
-import { AppBar, Button, Toolbar } from '@mui/material'
-import React from 'react'
+import React from 'react';
+import { AppBar, Button, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
 import './Home.jsx';
+
 
 const NavBar = () => {
   return (
@@ -14,8 +15,9 @@ const NavBar = () => {
             <Button component={Link} to='/Home' variant='contained' className='customButton'>Home</Button>
             </Toolbar>
         </AppBar>
+      
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

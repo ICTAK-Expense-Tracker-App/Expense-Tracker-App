@@ -11,7 +11,8 @@ import Admin from './components/Admin';
 function App() {
   return (
     <div className="App">
-      <NavBar />
+      
+       <NavBar /> 
       <Routes>
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
