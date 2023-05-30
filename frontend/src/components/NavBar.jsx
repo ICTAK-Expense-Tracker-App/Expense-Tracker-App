@@ -9,6 +9,7 @@ const NavBar = () => {
             <Toolbar>
             <Button component={Link} to='/Login' variant='contained'>Login</Button>
           <Button component={Link} to='/SignUp' variant='contained'>Sign Up</Button>
+          <Button component={Link} to='/Home' variant='contained'>Home</Button>
             </Toolbar>
         </AppBar>
     </div>
