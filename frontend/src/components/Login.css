@@ -1,0 +1,66 @@
+/* Login.css */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-left {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .login-logo {
+    
+    max-height: 100%; /* Limit the height to maintain aspect ratio */
+  }
+  
+  .login-right {
+    width:50%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 10%;
+  }
+  
+  .login-right h2 {
+    font-size: 24px;
+    color: #000000; /* Change the color to black */
+  }
+  
+  .login-right h4 {
+    font-size: 16px;
+    color: #000000; /* Change the color to black */
+  }
+  
+  .form-group {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+ 
+  
+  .login-button {
+    width: 100%;
+    background-color: #000000;
+    color: white;
+  }
+  
+  .signup-link {
+    margin-top: 10px;
+  }
+  
+  .signup-link span {
+    color: #000000; /* Change the color to black */
+  }
+  
+  .signup-link a {
+    color:black; /* Change the color as desired */
+  }
+  .black-link {
+    color: #000000;
+  }
+
+  
