@@ -49,7 +49,7 @@ const Login = () => {
           </div>
           <div className="forgot-password">
             <a href="#" className="black-link">Forgot Password?</a>
-          </div>
+          </div><br />
           <button type="submit" className="login-button">Log in</button>
         </form>
         <div className="signup-link">
