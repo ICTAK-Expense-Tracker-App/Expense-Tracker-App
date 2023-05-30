@@ -1,9 +1,24 @@
-/* NavbarStyles.css */
-
 .navbar {
-    background-color: black; 
-  }
-  
+  background-color: black !important;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
 .customButton {
-    background-color: green;
-  }
+  margin-left: 10px;
+  background-color: rgb(5, 131, 79);
+  color: rgb(218, 255, 244) !important;
+  border-radius: 20px;
+  padding: 8px 16px;
+}
+
+.customButton:not(:last-child) {
+  margin-right: 10px;
+}

@@ -5,7 +5,7 @@ import { CheckBox } from '@mui/icons-material';
 import './SignUp.css'
 
 const SignUp = () => {
-    const paperStyle = { padding: 20, width: 300, margin: "0 auto" };
+    const paperStyle = { padding: 15, width: 300, margin: "0 auto" };
     const headerStyle = { margin: 0 };
     const avatarStyle = { backgroundColor: '#1bbd7e' };
 
