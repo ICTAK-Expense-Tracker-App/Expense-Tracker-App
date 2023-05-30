@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="App">
-      {!isLoginPage && <NavBar />} {/* Render the navbar only if it's not the login page */}
+      {!isLoginPage && <NavBar />} /*Render the navbar only if it's not the login page */
       <Routes>
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
