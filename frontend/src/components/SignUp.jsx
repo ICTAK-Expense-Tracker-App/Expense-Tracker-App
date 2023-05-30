@@ -22,6 +22,7 @@ const SignUp = () => {
                 </Grid>
                 <form>
                     <TextField fullWidth label='Name' placeholder="Enter your name" />
+                    <TextField fullWidth label='Place' placeholder="Enter your place" />
                     <TextField fullWidth label='Age' placeholder="Enter your age" />
                     <TextField fullWidth label='Email' placeholder="Enter your email" />
                     <TextField fullWidth label='Phone Number' placeholder="Enter your phone number" />
