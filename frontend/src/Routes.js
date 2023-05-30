@@ -9,10 +9,10 @@ const Routes = () =>{
     return (
         <Router>
             <Switch>
-                <Route exact path="/" components={Home} />
-                <Route path="/add" component={AddNew} />
-                <Route path="/profile" component={Profile} />
-                <Route path="/admin" component={Admin} />
+                <Route exact path="/" component={Home} />
+                <Route path="/AddNew" component={AddNew} />
+                <Route path="/Profile" component={Profile} />
+                <Route path="/Admin" component={Admin} />
             </Switch>
         </Router>
     );
