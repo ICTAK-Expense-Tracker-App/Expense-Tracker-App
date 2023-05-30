@@ -6,11 +6,9 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 
 function App() {
-  const isLoginPage = window.location.pathname === '/Login';
-
   return (
     <div className="App">
-      {!isLoginPage && <NavBar />} /*Render the navbar only if it's not the login page */
+      <NavBar /> {/* Render the navbar on all pages */}
       <Routes>
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
