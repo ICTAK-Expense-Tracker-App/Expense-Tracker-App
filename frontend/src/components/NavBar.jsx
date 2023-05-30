@@ -9,7 +9,7 @@ const NavBar = () => {
         <AppBar position="static" className="navbar">
             <Toolbar>
             <Button component={Link} to='/Login' variant='contained' className='customButton'>Login</Button>
-          <Button component={Link} to='/SignUp' variant='contained' className='customButton'>Sign Up</Button>
+            <Button component={Link} to='/SignUp' variant='contained' className='customButton'>Sign Up</Button>
             </Toolbar>
         </AppBar>
     </div>
