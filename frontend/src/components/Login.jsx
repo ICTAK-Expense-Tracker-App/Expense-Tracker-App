@@ -54,7 +54,7 @@ const Login = () => {
         </form>
         <div className="signup-link">
           <span>Don't have an account?</span>
-          <a href="#" className="black-link">Sign up for free</a>
+          <a href="http://localhost:3000/SignUp" className="black-link">Sign up for free</a>
         </div>
       </div>
     </div>
