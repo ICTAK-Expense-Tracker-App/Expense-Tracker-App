@@ -13,8 +13,8 @@
 
 .customButton {
   margin-left: 10px;
-  background-color: rgb(5, 131, 79);
-  color: rgb(218, 255, 244) !important;
+  background-color: #008000;
+  color: #ffffff !important;
   border-radius: 20px;
   padding: 8px 16px;
 }
