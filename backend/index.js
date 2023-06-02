@@ -44,7 +44,7 @@ app.get('/view',(req,res)=>{
 
 
 // porting
-app.listen(8082,()=>{
+app.listen(8008,()=>{
     console.log("port is running in port 8082")
 })
 
