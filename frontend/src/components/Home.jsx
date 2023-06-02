@@ -4,10 +4,11 @@ import './Home.css';
 import './AddNew.jsx';
 import './Admin.jsx';
 import './Profile.jsx';
+import heyy from '../assets/heyy.jpg';
 
 const Home = () =>{
     return (
-        <div className="home-container">
+        <div className="homepage">
                 <div className="home-content">
                     <h1 className="home-heading">WELCOME TO HOME PAGE</h1>
                     <p>Here you can View and Manage your Income and Expenses.</p>
