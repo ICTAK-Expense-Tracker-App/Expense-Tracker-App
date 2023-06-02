@@ -35,7 +35,7 @@ const NavBar = () => {
           </Button>
           <Button
             component={Link}
-            to="/Home"
+            to="/"
             variant="contained"
             className="customButton"
             style={{ backgroundColor: buttonColor }}
