@@ -1,7 +1,7 @@
 // Login.jsx
 import React, { useState } from 'react';
 import './Login.css'; // Import the CSS file for Login component
-import logb from '../assets/logb.jpg'; // Import the image
+import Logb from '../assets/Logb.jpg'; // Import the image
 import TextField from '@mui/material/TextField'; // Import TextField component from MUI
 
 const Login = () => {
@@ -20,7 +20,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-left">
-        <img src={logb} alt="Logo" className="login-logo" />
+        <img src={Logb} alt="Logo" className="login-logo" />
       </div>
       <div className="login-right">
         <h2>Login</h2>
