@@ -4,9 +4,6 @@ import NavBar from './components/NavBar';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
-import AddNew from './components/AddNew';
-import Profile from './components/Profile';
-import Admin from './components/Admin';
 
 function App() {
   return (
