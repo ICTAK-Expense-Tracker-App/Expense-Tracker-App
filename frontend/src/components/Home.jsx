@@ -12,14 +12,11 @@ const Home = () => {
         <p>Here you can View and Manage your Income and Expenses.</p>
 
         <div className="buttons">
-          <Link to="/AddNew" className="home-link">
-            Add New
-          </Link>
           <Link to="/Login" className="home-link">
-            Profile
+            Login
           </Link>
-          <Link to="/Signup" className="home-link">
-            Admin
+          <Link to="/SignUp" className="home-link">
+            Signup
           </Link>
         </div>
       </div>
