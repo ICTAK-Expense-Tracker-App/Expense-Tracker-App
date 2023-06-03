@@ -9,7 +9,7 @@ app.use(cors())
 
 // post data
 app.post('/create',(req,res)=>{
-    var result = new studentModel(req.body)
+    var result = new customerModel(req.body)
     result.save()
     res.send("Data added")
 })
@@ -36,7 +36,7 @@ const studentModel = require('./model/customer')
 
 // api create
 app.get('/view',(req,res)=>{
-    res.json({"name":"Tiya","age":12})
+    res.json({"xname":"Tiya","sgrade":12})
 })
 
 
@@ -45,7 +45,7 @@ app.get('/view',(req,res)=>{
 
 // porting
 app.listen(8008,()=>{
-    console.log("port is running in port 8082")
+    console.log("port is running in port 8008")
 })
 
 //install npm i mongoose

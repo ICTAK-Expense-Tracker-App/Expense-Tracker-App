@@ -14,5 +14,5 @@ const customerSchema = new Schema({
     cname:String,
     cgrade:Number
 })
-var customerModel = mongoose.model("students",customerSchema);
+var customerModel = mongoose.model("students",customerSchema)
 module.exports = customerModel
