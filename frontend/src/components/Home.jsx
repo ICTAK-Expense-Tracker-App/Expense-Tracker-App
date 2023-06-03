@@ -9,17 +9,14 @@ const Home = () => {
     <div className="homepage">
       <div className="content">
         <h1 className="home-heading">WELCOME TO HOME PAGE</h1>
-        <p>Here you can View and Manage your Income and Expenses.</p>
+        <p>Money Management made simple</p>
 
         <div className="buttons">
-          <Link to="/AddNew" className="home-link">
-            Add New
+          <Link to="/Login" className="home-link">
+            Login
           </Link>
-          <Link to="/Profile" className="home-link">
-            Profile
-          </Link>
-          <Link to="/Admin" className="home-link">
-            Admin
+          <Link to="/SignUp" className="home-link">
+            Signup
           </Link>
         </div>
       </div>
