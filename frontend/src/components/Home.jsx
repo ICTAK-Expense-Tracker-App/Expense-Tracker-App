@@ -15,10 +15,10 @@ const Home = () => {
           <Link to="/AddNew" className="home-link">
             Add New
           </Link>
-          <Link to="/Profile" className="home-link">
+          <Link to="/Login" className="home-link">
             Profile
           </Link>
-          <Link to="/Admin" className="home-link">
+          <Link to="/Signup" className="home-link">
             Admin
           </Link>
         </div>
