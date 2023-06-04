@@ -16,13 +16,14 @@ const Login = ({ setLoginUser}) => {
         password:""
     })
 
-    const handleChange = e => {
-        const { name, value } = e.target
-        setUser({
-            ...user,
-            [name]: value
-        })
-    }
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setUser((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    };
+    
     const login = () => {
       axios.post("http://localhost:9002/Login", user)
       .then(res => {
@@ -44,6 +45,7 @@ const Login = ({ setLoginUser}) => {
             <TextField
               label="Email"
               variant="standard"
+              name="email"
               placeholder="Email"
               value={user.email}
               onChange={handleChange}
@@ -54,6 +56,7 @@ const Login = ({ setLoginUser}) => {
             <TextField
               label="Password"
               variant="standard"
+              name="password"
               placeholder="Password"
               type="password"
               value={user.password}
