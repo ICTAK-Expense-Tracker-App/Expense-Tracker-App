@@ -44,8 +44,8 @@ app.get('/view',(req,res)=>{
 
 
 // porting
-app.listen(8008,()=>{
-    console.log("port is running in port 8008")
+app.listen(8087,()=>{
+    console.log("port is running in port 8008");
 })
 
 //install npm i mongoose
