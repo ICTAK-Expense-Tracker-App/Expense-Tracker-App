@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -10,7 +10,6 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
         <NavBar />
         <Routes>
           <Route path="/Login" element={<Login setLoginUser={setLoginUser} />} />
@@ -22,7 +21,6 @@ function App() {
             }
           /> 
         </Routes>
-      </BrowserRouter>
     </div>
   );
 }
