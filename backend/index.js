@@ -1,51 +1,59 @@
 const express = require('express')
+const {model}=require('mongoose')
 const app = new express();
-const cors = require('cors')
+//const userModel = require('./model/userdb');
+const cors=require('cors')
 
-// middleware
+
+
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cors())
 
-// post data
-app.post('/create',(req,res)=>{
-    var result = new customerModel(req.body)
-    result.save()
-    res.send("Data added")
-})
-// to view data
-app.get('/see',async(req,res)=>{
-   var data =  await studentModel.find()
-   res.json(data)
-})
-// delete
-app.delete('/delete/:id',async(req,res)=>{
-    let id=req.params.id;
-    await studentModel.findByIdAndDelete(id)
-    res.json("Data deleted")
-})
-// update
-app.put('/update/:id',async(req,res)=>{
-    var id=req.params.id;
-    await studentModel.findByIdAndUpdate(id,req.body)
-    res.json("Data updated");
+app.post("/Login", (req, res)=> {
+    const { email, password} = req.body
+    User.findOne({ email: email}, (err, user) => {
+        if(user){
+            if(password === user.password ) {
+                res.send({message: "Login Successfull", user: user})
+            } else {
+                res.send({ message: "Password didn't match"})
+            }
+        } else {
+            res.send({message: "User not registered"})
+        }
+    })
 })
 
-// import studentdb
-const studentModel = require('./model/customer')
+app.post("/SignUp", (req, res)=> {
+    const { name, place , age ,email , no , password ,reEnterPassword } = req.body
+    User.findOne({email: email}, (err, user) => {
+        if(user){
+            res.send({message: "User already registerd"})
+        } else {
+            const user = new User({
+                name,
+                place,
+                age,
+                email,
+                no,
+                Password,
+                reEnterPassword
+            })
+            user.save(err => {
+                if(err) {
+                    res.send(err)
+                } else {
+                    res.send( { message: "Successfully Registered, Please login now." })
+                }
+            })
+        }
+    })
+    
+})
 
-// api create
-app.get('/view',(req,res)=>{
-    res.json({"xname":"Tiya","sgrade":12})
+app.listen(9002,() => {
+    console.log("BE started at port 9002")
 })
 
 
-
-
-
-// porting
-app.listen(8008,()=>{
-    console.log("port is running in port 8008")
-})
-
-//install npm i mongoose

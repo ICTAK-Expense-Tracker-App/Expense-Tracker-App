@@ -3,20 +3,34 @@ import React, { useState } from 'react';
 import './Login.css'; // Import the CSS file for Login component
 import Logb from '../assets/Logb.jpg'; // Import the image
 import TextField from '@mui/material/TextField'; // Import TextField component from MUI
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+import axios from "axios"
+import { Link } from 'react-router-dom';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Perform login logic here (e.g., send login request to server)
+const Login = ({ setLoginUser}) => {
+  const navigate = useNavigate();
 
-    // Reset the form
-    setEmail('');
-    setPassword('');
-  };
+    const [ user, setUser] = useState({
+        email:"",
+        password:""
+    })
 
+    const handleChange = e => {
+        const { name, value } = e.target
+        setUser({
+            ...user,
+            [name]: value
+        })
+    }
+    const login = () => {
+      axios.post("http://localhost:9002/Login", user)
+      .then(res => {
+          alert(res.data.message)
+          setLoginUser(res.data.user)
+          navigate("/")
+      })
+  }
   return (
     <div className="login-container">
       <div className="login-left">
@@ -25,14 +39,14 @@ const Login = () => {
       <div className="login-right">
         <h2>Login</h2>
         <h4>Welcome Back! Please enter your details.</h4>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="form-group">
             <TextField
               label="Email"
               variant="standard"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={user.email}
+              onChange={handleChange}
               required
             />
           </div>
@@ -42,15 +56,15 @@ const Login = () => {
               variant="standard"
               placeholder="Password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={user.password}
+              onChange={handleChange}
               required
             />
           </div>
           <div className="forgot-password">
             <a href="#" className="black-link">Forgot Password?</a>
           </div><br />
-          <button type="submit" className="login-button">Log in</button>
+          <button type="submit" className="login-button" onClick={login}>Log in</button>
         </form>
         <div className="signup-link">
           <span>Don't have an account?</span>
