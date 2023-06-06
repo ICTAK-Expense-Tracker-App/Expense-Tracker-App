@@ -51,18 +51,18 @@ app.post('/SignUp', (req, res) => {
     });
 });
 
-app.post('/Login', (req, res) => {
+app.post('/Login',async (req, res) => {
   const { email, password } = req.body;
 
   // Find the user with the provided email
-  User.findOne({ email })
-    .then((user) => {
-      if (!user) {
+  const check= await User.findOne({ email:email })
+    .then((check) => {
+      if (!check) {
         return res.status(404).json({ message: 'User not found' });
       }
 
       // Check if the password is correct
-      if (user.password !== password) {
+      if (check.password !== password) {
         return res.status(401).json({ message: 'Incorrect password' });
       }
 
