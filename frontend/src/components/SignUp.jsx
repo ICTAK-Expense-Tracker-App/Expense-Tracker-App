@@ -35,7 +35,7 @@ const SignUp = () => {
     const SignUp = () => {
         const { name, place, age ,email, no ,password, reEnterPassword } = user
         if( name && email && password && (password === reEnterPassword)){
-            axios.post("http://localhost:9002/register", user)
+            axios.post("http://localhost:9002/SignUp", user)
             .then( res => {
                 alert(res.data.message)
                 navigate("/Login")
@@ -47,7 +47,7 @@ const SignUp = () => {
 
     return (
       
-        <Grid className='Sig' container justify="center">
+        <Grid className='Sig' container justifyContent="center">
             {console.log("User", user)}
             <Paper style={paperStyle}>
                 <Grid align='center'>
