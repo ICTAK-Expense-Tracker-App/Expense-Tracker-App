@@ -1,31 +1,27 @@
-const mongoose = require('mongoose')
-<<<<<<< HEAD:backend/model/user.js
-mongoose.connect('mongodb+srv://annmarywilson293@gmail.com:annmarywilson03@cluster0.fwg4655.mongodb.net/?retryWrites=true&w=majority')
-=======
 
-mongoose.connect('mongodb+srv://annmarywilson:annmarywilson@cluster0.fwg4655.mongodb.net/?retryWrites=true&w=majority')
+const mongoose=require("mongoose")
+mongoose.connect('mongodb+srv://annmarywilson:<password>@cluster0.fwg4655.mongodb.net/Users?retryWrites=true&w=majority')
+    console.log("mongodb connected")
 
-// to check for error unimportant step
->>>>>>> d487f81840bfd7610c8a44c386dd3b36c6b744a2:backend/model/customer.js
-.then(()=>{
+/*.then(()=>{
     console.log("db connected")
 })
-.catch(err=>console.log(err))
-let Schema = mongoose.Schema
-const userSchema = new Schema({
-    name:String,
-    place:String,
-    age:Number,
-    email:String,
-    no:Number,
-    Password:String,
-    reEnterPassword:String
-})
-<<<<<<< HEAD:backend/model/user.js
-const User = new mongoose.model("User", userSchema)
+.catch(()=>{
+    console.log('failed');
+})*/
 
-module.exports = userModel
-=======
-var customerModel = mongoose.model("students",customerSchema)
-module.exports = customerModel;
->>>>>>> d487f81840bfd7610c8a44c386dd3b36c6b744a2:backend/model/customer.js
+
+let newSchema=new mongoose.Schema({
+    email:{
+        type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    }
+})
+
+var collection = mongoose.model("collection",newSchema)
+
+module.exports=collection
