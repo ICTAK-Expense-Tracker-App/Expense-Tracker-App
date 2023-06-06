@@ -24,7 +24,7 @@ const SignUp = () => {
         reEnterPassword: ""
     })
 
-    const handleChange = e => {
+    const handleChange = (e) => {
         const { name, value } = e.target
         setUser({
             ...user,
@@ -47,7 +47,7 @@ const SignUp = () => {
 
     return (
       
-        <Grid className='Sig' container justify="center">
+        <Grid className='Sig' container justifyContent="center">
             {console.log("User", user)}
             <Paper style={paperStyle}>
                 <Grid align='center'>
@@ -58,13 +58,13 @@ const SignUp = () => {
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account!</Typography>
                 </Grid>
                 <form>
-                    <TextField fullWidth label='Name' value={user.name} placeholder="Enter your name" onChange={ handleChange }/>
-                    <TextField fullWidth label='Place' value={user.place} placeholder="Enter your place" onChange={ handleChange }/>
-                    <TextField fullWidth label='Age' value={user.age} placeholder="Enter your age" onChange={ handleChange } />
-                    <TextField fullWidth label='Email' value={user.email} placeholder="Enter your email" onChange={ handleChange }/>
-                    <TextField fullWidth label='Phone Number' value={user.no} placeholder="Enter your phone number" onChange={ handleChange }/>
-                    <TextField fullWidth label='Password' value={user.password} placeholder="Enter your password" type="password" onChange={ handleChange }/>
-                    <TextField fullWidth label='Confirm Password' value={user.reEnterPassword} placeholder="Confirm your password" type="password" onChange={ handleChange }/>
+                    <TextField fullWidth label='Name' name='name' value={user.name} placeholder="Enter your name" onChange={ handleChange }/>
+                    <TextField fullWidth label='Place' name='place' value={user.place} placeholder="Enter your place" onChange={ handleChange }/>
+                    <TextField fullWidth label='Age' name='age' value={user.age} placeholder="Enter your age" onChange={ handleChange } />
+                    <TextField fullWidth label='Email' name='email' value={user.email} placeholder="Enter your email" onChange={ handleChange }/>
+                    <TextField fullWidth label='Phone Number' name='no' value={user.no} placeholder="Enter your phone number" onChange={ handleChange }/>
+                    <TextField fullWidth label='Password' name='password' value={user.password} placeholder="Enter your password" type="password" onChange={ handleChange }/>
+                    <TextField fullWidth label='Confirm Password' name='reEnterPassword' value={user.reEnterPassword} placeholder="Confirm your password" type="password" onChange={ handleChange }/>
                     
                     <FormControlLabel
                         control={<CheckBox name="checkedA" />}
