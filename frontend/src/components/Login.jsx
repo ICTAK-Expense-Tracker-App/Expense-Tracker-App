@@ -4,7 +4,6 @@ import './Login.css'; // Import the CSS file for Login component
 import Logb from '../assets/Logb.jpg'; // Import the image
 import TextField from '@mui/material/TextField'; // Import TextField component from MUI
 import { useNavigate } from 'react-router-dom';
-
 import axios from "axios"
 import { Link } from 'react-router-dom';
 
@@ -24,13 +23,14 @@ const Login = ({ setLoginUser}) => {
       }));
     };
     
-    const login = () => {
+    const Login = () => {
       axios.post("http://localhost:9002/Login", user)
       .then(res => {
           alert(res.data.message)
           setLoginUser(res.data.user)
           navigate("/")
       })
+      .catch(err=>console.log(err))
   }
   return (
     <div className="login-container">
@@ -67,7 +67,7 @@ const Login = ({ setLoginUser}) => {
           <div className="forgot-password">
             <a href="#" className="black-link">Forgot Password?</a>
           </div><br />
-          <button type="submit" className="login-button" onClick={login}>Log in</button>
+          <button type="submit" className="login-button" onClick={Login}>Log in</button>
         </form>
         <div className="signup-link">
           <span>Don't have an account?</span>

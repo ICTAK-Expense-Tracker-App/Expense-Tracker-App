@@ -40,6 +40,7 @@ const SignUp = () => {
                 alert(res.data.message)
                 navigate("/Login")
             })
+            .catch(err=>console.log(err))
         } else {
             alert("Invalid Input")
         }
