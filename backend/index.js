@@ -51,28 +51,31 @@ app.post('/SignUp', (req, res) => {
     });
 });
 
-app.post('/Login',async (req, res) => {
+app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  // Find the user with the provided email
-  const check= await User.findOne({ email:email })
-    .then((check) => {
-      if (!check) {
-        return res.status(404).json({ message: 'User not found' });
-      }
+  try {
+    // Find the user with the provided email
+    const user = await User.findOne({ email });
 
-      // Check if the password is correct
-      if (check.password !== password) {
-        return res.status(401).json({ message: 'Incorrect password' });
-      }
+    if (!user) {
+      return res.status(404).json({ message: 'User doesn\'t exist' });
+    }
 
-      // User login successful
-      res.status(200).json({ message: 'Login successful' });
-    })
-    .catch((error) => {
-      res.status(500).json({ message: 'Error occurred during login', error });
-    });
+    // Check if the password is correct
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    // User login successful
+    res.status(200).json({ message: 'Login successful', user })
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred during login', error });
+  }
 });
+
+
+
 
 app.listen(9002, () => {
   console.log('Server listening on port 9002');
