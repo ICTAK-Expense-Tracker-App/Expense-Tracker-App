@@ -74,7 +74,21 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.get('/profile',async (req, res) => {
+  try {
+    // Fetch the user details based on the authenticated user's ID
+    const user = await User.findById(req.user.id);
 
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return the user profile details
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while fetching user profile', error });
+  }
+});
 
 
 app.listen(9002, () => {
