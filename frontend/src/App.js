@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -12,7 +12,6 @@ function App() {
   const [user, setLoginUser] = useState({});
 
   return (
-    <Router>
       <div className="App">
         <NavBar />
         <Routes>
@@ -24,7 +23,6 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
-    </Router>
   );
 }
 
