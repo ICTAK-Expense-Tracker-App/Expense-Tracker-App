@@ -1,39 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Profile.css';
 
-const Profile = ({ user }) => {
-  const [profileData, setProfileData] = useState(null);
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:9002/profile')
-      .then((res) => {
-        setProfileData(res.data.user);
-      })
-      .catch((error) => {
-        console.log('Error occurred while fetching user profile', error);
-      });
-  }, []);
-
+const Profile = () => {
   return (
     <div className="profile-container">
-      <div className="profile-details">
-        {profileData && (
-          <div>
-            <h2>Profile Details</h2>
-            <p>
-              <strong>Name:</strong> {profileData.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {profileData.email}
-            </p>
-            {/* Add more profile details as needed */}
-          </div>
-        )}
+
+    <div className="profile-content">
+        <h1 className="profile-heading">Profile</h1>
       </div>
-      <div className="main-content">
-        {/* Add the main content of the profile page */}
-      </div>
+    
+      <h1>Profile</h1>
+      <p>User Details</p>
+      <p>Total Expenses</p>
+      <Link to="/">Go Back</Link>
     </div>
   );
 };

@@ -1,7 +1,22 @@
 .profile-container {
-    background-color: black;
-}
-
-.profile-heading {
-    color: green;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .profile-heading {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .profile-details {
+    margin-bottom: 2rem;
+  }
+  
+  .profile-link {
+    font-size: 1.2rem;
+    color: #333;
+    text-decoration: none;
+  }

@@ -1,7 +1,22 @@
 .addnew-container {
-    background-color: black;
-}
-
-.addnew-heading {
-    color: green;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .addnew-content {
+    margin-bottom: 2rem;
+  }
+  
+  .addnew-heading {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .addnew-link {
+    font-size: 1.2rem;
+    color: #333;
+    text-decoration: none;
+  }
