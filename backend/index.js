@@ -1,4 +1,4 @@
-
+//index.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -31,13 +31,13 @@ app.post('/SignUp', (req, res) => {
 
   // Create a new user instance
   const newUser = new User({
-    name:String,
-    place:String,
-    age:Number,
-    email:String,
-    no:Number,
-    password:String,
-    reEnterPassword:String
+    name: req.body.name,
+    place: req.body.place,
+    age: req.body.age,
+    email: req.body.email,
+    no: req.body.no,
+    password: req.body.password,
+    reEnterPassword: req.body.reEnterPassword
   });
 
   // Save the user to the database
