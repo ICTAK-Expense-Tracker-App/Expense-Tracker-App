@@ -5,8 +5,7 @@ import NavBar from './components/NavBar';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
-import AddNewPage from './components/AddNewPage';
-import ProfilePage from './components/ProfilePage';
+
 
 function App() {
   const [user, setLoginUser] = useState({});
