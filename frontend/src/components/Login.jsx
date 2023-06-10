@@ -1,37 +1,44 @@
-// Login.jsx
 import React, { useState } from 'react';
-import './Login.css'; // Import the CSS file for Login component
-import Logb from '../assets/Logb.jpg'; // Import the image
-import TextField from '@mui/material/TextField'; // Import TextField component from MUI
+import './Login.css';
+import Logb from '../assets/Logb.jpg';
+import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios"
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const Login = ({ setLoginUser}) => {
+const Login = ({ setLoginUser }) => {
   const navigate = useNavigate();
 
-    const [ user, setUser] = useState({
-        email:"",
-        password:""
-    })
+  const [user, setUser] = useState({
+    email: '',
+    password: ''
+  });
 
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setUser((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    };
-    
-    const Login = () => {
-      axios.post("http://localhost:9002/Login", user)
-      .then(res => {
-          alert(res.data.message)
-          setLoginUser(res.data.user)
-          navigate("/")
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleLogin = () => {
+    axios
+      .post('http://localhost:9002/login', user)
+      .then((res) => {
+        alert(res.data.message);
+        setLoginUser(res.data.user);
+        navigate('/profile');
       })
-      .catch(err=>console.log(err))
-  }
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          alert(error.response.data.message);
+        } else {
+          console.log('Error occurred during login', error);
+        }
+      });
+  };
+
   return (
     <div className="login-container">
       <div className="login-left">
@@ -65,13 +72,20 @@ const Login = ({ setLoginUser}) => {
             />
           </div>
           <div className="forgot-password">
-            <a href="#" className="black-link">Forgot Password?</a>
-          </div><br />
-          <button type="submit" className="login-button" onClick={Login}>Log in</button>
+            <a href="#" className="black-link">
+              Forgot Password?
+            </a>
+          </div>
+          <br />
+          <button type="button" className="login-button" onClick={handleLogin}>
+            Log in
+          </button>
         </form>
         <div className="signup-link">
           <span>Don't have an account?</span>
-          <a href="http://localhost:3000/SignUp" className="black-link">Sign up for free</a>
+          <a href="http://localhost:3000/SignUp" className="black-link">
+            Sign up for free
+          </a>
         </div>
       </div>
     </div>
