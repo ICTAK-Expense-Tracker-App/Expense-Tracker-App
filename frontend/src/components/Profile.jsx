@@ -7,9 +7,20 @@ const Profile = ({ userId }) => {
   const [updatedUser, setUpdatedUser] = useState({});
 
   useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get(`/profile/${userId}`);
+        console.log(response.data.user); 
+        const userData = response.data.user;
+        setUser(userData);
+        setUpdatedUser(userData);
+      } catch (error) {
+        console.error('Error occurred while fetching user profile:', error);
+      }
+    };
+  
     fetchUserProfile();
   }, []);
-
   const handleEdit = () => {
     setEditing(true);
   };
@@ -32,17 +43,6 @@ const Profile = ({ userId }) => {
     }
   };
 
-  const fetchUserProfile = async () => {
-    try {
-      const response = await axios.get(`/profile/${userId}`);
-      const userData = response.data.user;
-      setUser(userData);
-      setUpdatedUser(userData);
-    } catch (error) {
-      console.error('Error occurred while fetching user profile:', error);
-    }
-  };
-  
   
 
   return (

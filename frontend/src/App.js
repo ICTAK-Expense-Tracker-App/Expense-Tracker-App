@@ -28,7 +28,6 @@ function App() {
         <Route path="/AddNew" element={<AddNew />} />
         <Route path="/profile" element={<Profile userId={user._id} />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        
       </Routes>
     </div>
   );
