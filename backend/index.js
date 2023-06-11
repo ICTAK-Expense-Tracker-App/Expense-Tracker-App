@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 mongoose
-  .connect('mongodb+srv://annmarywilson:annmarywilson@cluster0.fwg4655.mongodb.net/?retryWrites=true&w=majority', {
+  .connect('mongodb+srv://annmarywilson:annmarywilson@cluster0.fwg4655.mongodb.net/test', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -18,8 +18,9 @@ mongoose
     console.log('Connected to MongoDB');
   })
   .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
+    console.error('Error connecting to MongoDB:', error.message);
   });
+
 
 app.post('/SignUp', (req, res) => {
   const { name, place, age, email, no, password, reEnterPassword } = req.body;
@@ -74,7 +75,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/profile',async (req, res) => {
+app.get('/profile', async (req, res) => {
   try {
     // Fetch the user details based on the authenticated user's ID
     const user = await User.findById(req.user.id);
@@ -86,9 +87,10 @@ app.get('/profile',async (req, res) => {
     // Return the user profile details
     res.status(200).json({ user });
   } catch (error) {
-    res.status(500).json({ message: 'Error occurred while fetching user profile', error });
+    res.status(500).json({ message: 'Error occurred while fetching user profile', error: error.message });
   }
 });
+
 
 
 app.listen(9002, () => {
