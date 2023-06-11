@@ -1,44 +1,47 @@
-.Sig{
-  padding-top: 2%;
+.Sig {
   background-image: url('../assets/pro.jpg');
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
-  .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
 
-  .profile-heading {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 2rem;
-  }
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 
-  .profile-details {
-    margin-bottom: 2rem;
-    text-align: center;
-  }
+.profile-heading {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
 
-  .button-container {
-    margin-bottom: 2rem;
-  }
+.profile-details {
+  margin-bottom: 2rem;
+  text-align: center;
+}
 
-  .profile-button {
-    padding: 1rem 2rem;
-    margin: 0.5rem;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #333;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+.button-container {
+  margin-bottom: 2rem;
+}
 
-  .profile-link {
-    font-size: 1rem;
-    color: #333;
-    text-decoration: none;
-  }
+.profile-button {
+  padding: 1rem 2rem;
+  margin: 0.5rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.profile-link {
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+}
+
