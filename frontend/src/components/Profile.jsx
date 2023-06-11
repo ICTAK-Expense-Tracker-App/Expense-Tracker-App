@@ -9,7 +9,9 @@ const Profile = ({ userId }) => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get(`/profile/${userId}`);
+        const response = await axios.get('http://localhost:9002/profile', {
+          params: { userId: userId }
+        });
         console.log(response.data.user); 
         const userData = response.data.user;
         setUser(userData);
