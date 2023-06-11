@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../assets/heyy.jpg');
+    background-image: url('../assets/h.jpg');
     background-size: cover;
     height: 100vh;
   }
@@ -13,7 +13,7 @@
   }
   
   .home-heading {
-    color: green;
+    color: rgb(50, 161, 137);
     font-size: 3rem;
     margin-bottom: 1rem;
   }
@@ -21,17 +21,19 @@
   p {
     font-size: 1.5rem;
     margin-bottom: 2rem;
+    color:#ffffff
   }
   
   .buttons {
     display: flex;
     justify-content: center;
+    
   }
   
   .home-link {
     margin: 0 1rem;
     padding: 1rem 2rem;
-    background-color: #008000;
+    background-color: #2d7a70;
     color: #ffffff;
     text-decoration: none;
     border-radius: 20px;

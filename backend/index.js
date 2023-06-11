@@ -75,12 +75,15 @@ app.post('/Login', async (req, res) => {
   }
 });
 
-app.get('/profile/:userId', async (req, res) => {
+app.get('/profile', async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.query.userId;
+
     
     // Fetch the user details based on the user ID
-    const user = await User.findById(userId);
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
