@@ -52,7 +52,7 @@ app.post('/SignUp', (req, res) => {
     });
 });
 
-app.post('/login', async (req, res) => {
+app.post('/Login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -75,10 +75,12 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/profile', async (req, res) => {
+app.get('/profile/:userId', async (req, res) => {
   try {
-    // Fetch the user details based on the authenticated user's ID
-    const user = await User.findById(req.user.id);
+    const userId = req.params.userId;
+    
+    // Fetch the user details based on the user ID
+    const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });

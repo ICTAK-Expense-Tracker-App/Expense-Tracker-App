@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
-import Logb from '../assets/Logb.jpg';
+import Logb from '../assets/logb.jpg';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';

@@ -10,21 +10,28 @@ import Profile from './components/Profile';
 
 function App() {
   const [user, setLoginUser] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogout = () => {
+    // Perform the logout logic
+    setIsLoggedIn(false);
+    setLoginUser({});
+  };
 
   return (
-      <div className="App">
-        <NavBar />
-        <Routes>
-          <Route path="/Login" element={<Login setLoginUser={setLoginUser} />} />
-          <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/AddNew" element={<AddNew />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-      </div>
+    <div className="App">
+      <NavBar isLoggedIn={Object.keys(user).length !== 0} handleLogout={() => setLoginUser({})} />
+      <Routes>
+        <Route path="/Login" element={<Login setLoginUser={setLoginUser} />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/AddNew" element={<AddNew />} />
+        <Route path="/profile" element={<Profile userId={user._id} />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        
+      </Routes>
+    </div>
   );
 }
 
 export default App;
-
