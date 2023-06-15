@@ -1,36 +1,30 @@
 import React, { useState } from 'react';
 import './Dashboard.css';
-import AddNew from './AddNew';
-import Profile from './Profile';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-  const [selectedOption, setSelectedOption] = useState('incomeExpense');
-  const [expenses, setExpenses] = useState([]);
-  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [selectedOption, setSelectedOption] = useState('');
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
   };
 
-  const handleAddExpense = (expense) => {
-    setExpenses((prevExpenses) => [...prevExpenses, expense]);
-    calculateTotalExpenses();
-  };
-
-  const calculateTotalExpenses = () => {
-    const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-    setTotalExpenses(total);
-  };
-
   return (
     <div className="dashboard-container">
-      <div className="dashboard-buttons">
-        <button onClick={() => handleOptionSelect('incomeExpense')}>Income/Expense</button>
-        <button onClick={() => handleOptionSelect('editProfile')}>Edit Profile</button>
+      <div className="sidebar">
+        <div className="user-profile">
+          <h2>User Name</h2>
+        </div>
+        <div className="sidebar-buttons">
+        <Button onClick={() => handleOptionSelect('profile')} component={Link} to="/profile"  className="customButton">Profile</Button>
+        <br />
+        <Button onClick={() => handleOptionSelect('income')} component={Link} to="/dashboard"  className="customButton">Income/Expenses</Button>
+        </div>
       </div>
       <div className="dashboard-content">
-        {selectedOption === 'incomeExpense' && <AddNew onAddExpense={handleAddExpense} />}
-        {selectedOption === 'editProfile' && <Profile totalExpenses={totalExpenses} />}
+        {selectedOption === 'profile' && <h2>Profile</h2>}
+        {selectedOption === 'income' && <h2>Income/Expenses</h2>}
       </div>
     </div>
   );

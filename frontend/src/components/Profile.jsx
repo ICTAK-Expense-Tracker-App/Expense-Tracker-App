@@ -22,9 +22,11 @@ const Profile = ({ userId }) => {
     };
   
     fetchUserProfile();
-  }, []);
+  }, [userId]);
+
   const handleEdit = () => {
-    setEditing(true);
+    setEditing(!editing);
+    setUpdatedUser(user); // Reset updatedUser to the original user data when entering editing mode
   };
 
   const handleInputChange = (e) => {
@@ -37,7 +39,7 @@ const Profile = ({ userId }) => {
 
   const handleSave = async () => {
     try {
-      await axios.put('/profile', updatedUser);
+      await axios.put('http://localhost:9002/profile', updatedUser);
       setEditing(false);
       setUser(updatedUser);
     } catch (error) {
@@ -45,10 +47,9 @@ const Profile = ({ userId }) => {
     }
   };
 
-  
-
   return (
     <div className="profile-container">
+      
       <div className="profile-content">
         <h1 className="profile-heading">Profile</h1>
       </div>
@@ -87,7 +88,7 @@ const Profile = ({ userId }) => {
           {editing ? (
             <input
               type="text"
-              name="Age"
+              name="age"
               value={updatedUser.age || ''}
               onChange={handleInputChange}
             />
@@ -101,7 +102,7 @@ const Profile = ({ userId }) => {
           {editing ? (
             <input
               type="text"
-              name="phoneNumber"
+              name="no"
               value={updatedUser.no || ''}
               onChange={handleInputChange}
             />
@@ -121,24 +122,25 @@ const Profile = ({ userId }) => {
             />
           ) : (
             <span>{user.email}</span>
+            )}
+          </div>
+        </div>
+  
+        <div className="button-container">
+          {editing ? (
+            <button className="profile-button" onClick={handleSave}>
+              Save
+            </button>
+          ) : (
+            <button className="profile-button" onClick={handleEdit}>
+              Edit Profile
+            </button>
           )}
+          <button className="profile-button">Change Password</button>
         </div>
       </div>
-
-      <div className="button-container">
-        {editing ? (
-          <button className="profile-button" onClick={handleSave}>
-            Save
-          </button>
-        ) : (
-          <button className="profile-button" onClick={handleEdit}>
-            Edit Profile
-          </button>
-        )}
-        <button className="profile-button">Change Password</button>
-      </div>
-    </div>
-  );
-};
-
-export default Profile;
+    );
+  };
+  
+  export default Profile;
+  

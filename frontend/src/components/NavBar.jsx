@@ -29,7 +29,7 @@ const NavBar = ({ isLoggedIn, handleLogout }) => {
             </>
           ) : (
             <>
-              <Button component={Link} to="/profile" variant="contained" className="customButton">Profile</Button>
+              
               <Button variant="contained" className="customButton" onClick={handleLogoutClick}>Logout</Button>
             </>
           )}

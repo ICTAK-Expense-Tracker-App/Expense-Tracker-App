@@ -97,6 +97,39 @@ app.get('/profile', async (req, res) => {
 });
 
 
+// ...
+
+app.put('/profile', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the user profile
+    user.name = req.body.name;
+    user.place = req.body.place;
+    user.age = req.body.age;
+    user.no = req.body.no;
+    user.email = req.body.email;
+
+    // Save the updated user profile
+    await user.save();
+
+    // Return the updated user profile
+    res.status(200).json({ message: 'User profile updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while updating user profile', error: error.message });
+  }
+});
+
+// ...
+
+
 
 app.listen(9002, () => {
   console.log('Server listening on port 9002');
