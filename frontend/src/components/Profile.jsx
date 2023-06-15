@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Sidebar from './Sidebar';
 
 const Profile = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -10,9 +11,8 @@ const Profile = ({ userId }) => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get('http://localhost:9002/profile', {
-          params: { userId: userId }
+          params: { userId: userId },
         });
-        console.log(response.data.user); 
         const userData = response.data.user;
         setUser(userData);
         setUpdatedUser(userData);
@@ -20,7 +20,7 @@ const Profile = ({ userId }) => {
         console.error('Error occurred while fetching user profile:', error);
       }
     };
-  
+
     fetchUserProfile();
   }, [userId]);
 
@@ -33,7 +33,7 @@ const Profile = ({ userId }) => {
     const { name, value } = e.target;
     setUpdatedUser((prevUser) => ({
       ...prevUser,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -46,6 +46,9 @@ const Profile = ({ userId }) => {
       console.error('Error occurred while updating user profile:', error);
     }
   };
+
+
+
 
   return (
     <div className="profile-container">

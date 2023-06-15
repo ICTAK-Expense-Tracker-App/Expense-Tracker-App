@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './Dashboard.css';
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
+import Sidebar from './Sidebar';
+import Profile from './Profile';
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState('');
@@ -12,19 +14,13 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="sidebar">
-        <div className="user-profile">
-          <h2>User Name</h2>
-        </div>
-        <div className="sidebar-buttons">
-        <Button onClick={() => handleOptionSelect('profile')} component={Link} to="/profile"  className="customButton">Profile</Button>
-        <br />
-        <Button onClick={() => handleOptionSelect('income')} component={Link} to="/dashboard"  className="customButton">Income/Expenses</Button>
-        </div>
-      </div>
+      <Sidebar handleOptionSelect={handleOptionSelect} />
       <div className="dashboard-content">
-        {selectedOption === 'profile' && <h2>Profile</h2>}
-        {selectedOption === 'income' && <h2>Income/Expenses</h2>}
+        <Routes>
+          <Route path="/" element={<h2>Welcome to the Dashboard</h2>} />
+          <Route path="/dashboard" element={<h2>Income/Expenses</h2>} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
       </div>
     </div>
   );
