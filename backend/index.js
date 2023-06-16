@@ -416,6 +416,21 @@ app.post('/transactions', async (req, res) => {
   }
 });
 
+app.get('/checkEmail', (req, res) => {
+  // Retrieve the email parameter from the query string
+  const email = req.query.email;
+
+  // Perform your email checking logic here
+  // For demonstration purposes, let's assume the email is valid if it ends with ".com"
+  const isValidEmail = email.endsWith('.com');
+
+  // Send the response based on the email validity
+  if (isValidEmail) {
+    res.status(200).json({ message: 'Email is valid' });
+  } else {
+    res.status(400).json({ message: 'Email is invalid' });
+  }
+});
 
 app.listen(9002, () => {
   console.log('Server listening on port 9002');
