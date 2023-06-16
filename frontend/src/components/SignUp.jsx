@@ -34,11 +34,26 @@ const SignUp = () => {
     }));
   };
 
+  const handleEmailValidation = () => {
+    axios
+      .get('http://localhost:9002/checkEmail', { params: { email: user.email } })
+      .then((res) => {
+        alert(res.data.message);
+        // Proceed with the form submission if the email is valid
+        handleFormSubmit();
+      })
+      .catch((err) => {
+        console.log('Error occurred while checking email:', err);
+        alert('Failed to check email. Please try again later.');
+      });
+  };
+
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    const { email, password, reEnterPassword } = user;
-
+  
+    const { password, reEnterPassword } = user;
+  
     // Password constraints validation
     const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
     if (!passwordRegex.test(password)) {
@@ -47,41 +62,20 @@ const SignUp = () => {
       );
       return;
     }
-
+  
     // Phone number validation
     const phoneNumberRegex = /^\d{10}$/;
     if (!phoneNumberRegex.test(user.no)) {
       alert('Phone number must be 10 digits long');
       return;
     }
-
-    // Check if the email already exists
-    axios
-      .get('http://localhost:9002/checkEmail', { params: { email: email } })
-      .then((response) => {
-        if (response.data.exists) {
-          setEmailError('User already registered. Please enter a different email address.');
-        } else {
-          // Rest of the form submission logic
-          if (user.name && user.email && user.password && password === reEnterPassword) {
-            axios
-              .post('http://localhost:9002/SignUp', user)
-              .then((res) => {
-                alert(res.data.message);
-                navigate('/Login');
-              })
-              .catch((err) => console.log(err));
-          } else {
-            alert('Invalid Input');
-          }
-        }
-      })
-      .catch((error) => {
-        console.error('Error occurred while checking email:', error);
-        // Handle the error accordingly (e.g., display an error message)
-        // ...
-      });
+  
+    // Check email validity before submitting the form
+    handleEmailValidation();
   };
+  
+  
+  
 
  return (
   <Grid className="Sig" container justifyContent="center">
@@ -97,7 +91,7 @@ const SignUp = () => {
           Please fill this form to create an account!
         </Typography>
       </Grid>
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleEmailValidation}>
         <TextField
           fullWidth
           label="Name"
