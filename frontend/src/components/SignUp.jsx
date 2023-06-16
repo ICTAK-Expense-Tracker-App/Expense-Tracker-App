@@ -5,7 +5,6 @@ import { CheckBox } from '@mui/icons-material';
 import './SignUp.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
 const SignUp = () => {
   const paperStyle = { padding: 15, width: 500, margin: '0 auto' };
   const headerStyle = { margin: 0 };
