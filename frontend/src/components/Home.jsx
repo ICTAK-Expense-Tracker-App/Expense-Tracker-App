@@ -8,19 +8,19 @@ const Home = () => {
   return (
     <div className="homepage">
       <div className="content">
-        <h1 className="home-heading">WELCOME TO EXPENSIO</h1>
+        <h1 className="home-heading">EXPENSIO</h1>
         <p>Money Management made simple</p>
 
         <div className="buttons">
-          <Link to="/Login" className="home-link">
-            Login
-          </Link>
-          <Link to="/SignUp" className="home-link">
-            Signup
-          </Link>
+            <button className="home-link" onClick={() => { window.location.href = "/Login"; }}>
+              Login
+            </button>
+            <button className="home-link" onClick={() => { window.location.href = "/SignUp"; }}>
+              Signup
+            </button>
+        </div>
         </div>
       </div>
-    </div>
   );
 };
 

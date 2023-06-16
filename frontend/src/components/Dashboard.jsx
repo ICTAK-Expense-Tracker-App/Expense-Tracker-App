@@ -46,7 +46,7 @@ const Dashboard = ({userId}) => {
         const userData = response.data.user;
         // setUser(userData);
         // setUpdatedUser(userData);
-       
+        const userEmail=userData.email
       } catch (error) {
         console.error('Error occurred while fetching user profile:', error);
       }
@@ -54,7 +54,7 @@ const Dashboard = ({userId}) => {
    
     fetchUserProfile();
   }, [userId]);
- 
+  
   const handleTransactionTypeChange = (event) => {
     setTransactionType(event.target.value);
   };
@@ -73,7 +73,9 @@ const Dashboard = ({userId}) => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get('http://localhost:9002/transactions');
+        const response = await axios.get('http://localhost:9002/test-json', {
+          params: { userId: userId },
+        });
 
         if (response.status === 200) {
           const transactions = response.data;
@@ -91,7 +93,7 @@ const Dashboard = ({userId}) => {
   
 
 // Fetch income details
-fetch(`/income?email=${user.email}`)
+fetch(`/income?email=${userId}`)
   .then(response => response.json())
   .then(data => {
     // Handle the income data
@@ -104,7 +106,7 @@ fetch(`/income?email=${user.email}`)
   });
 
 // Fetch expense details
-fetch(`/expenses?email=${user.email}`)
+fetch(`/expenses?email=${userId}`)
   .then(response => response.json())
   .then(data => {
     // Handle the expense data
@@ -120,7 +122,7 @@ fetch(`/expenses?email=${user.email}`)
 
 const handleAddTransaction = async () => {
   const newTransaction = {
-    email:user.email, // Assuming you have the email stored in the "user.email" variable
+    email: userId, // Assuming you have the email stored in the "user.email" variable
     type: transactionType,
     amount: transactionAmount,
     note: transactionNote,

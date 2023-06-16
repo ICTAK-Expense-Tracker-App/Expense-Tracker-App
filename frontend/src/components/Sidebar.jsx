@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import './Sidebar.css'
 const Sidebar = ({ handleOptionSelect }) => {
   const [username, setUsername] = useState('');
 

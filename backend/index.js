@@ -26,10 +26,11 @@ mongoose
 
   app.post('/test-json', async (req, res) => {
     console.log('test')
-    
-    const firstData = await Expense.find({email: "test@gmail.com"}).exec();
+    const userId = req.query.userId;
+    const firstData = await Expense.find({email: userId}).exec();
     console.log(firstData);
-    res.send(firstData);
+    // res.send(firstData);
+    res.status(200).json({ user });
   });
 
 
@@ -208,18 +209,13 @@ app.put('/UpdatePassword', async (req, res) => {
 // ...
 
 app.post('/transactions', async (req, res) => {
+
   try {
-    const { email, type, amount, date, note } = req.body;
+    const { email,type, amount, date, note } = req.body;
 
-    // Check if the email exists in the User collection
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Create a new expense instance with the user's email
+    // Create a new expense instance
     const newExpense = new Expense({
-      email: user.email,
+      email,
       type,
       amount,
       date,
@@ -236,64 +232,25 @@ app.post('/transactions', async (req, res) => {
   }
 });
 
-// ...
 
 
 
-
-app.get('/income', async (req, res) => {
+app.get('/checkEmail', async (req, res) => {
   try {
-    const { email } = req.query;
+    const email = req.query.email;
+    console.log(email);
 
-    // Find all income transactions for the given email
-    const income = await Transaction.find({ email, type: 'income' });
-
-    // Calculate the total income
-    const totalIncome = income.reduce((sum, transaction) => sum + transaction.amount, 0);
-
-    res.status(200).json({ income, totalIncome });
-  } catch (error) {
-    console.error('Error occurred while fetching income:', error);
-    res.status(500).json({ message: 'Failed to fetch income', error: error.message });
-  }
-});
-
-app.get('/expenses', async (req, res) => {
-  try {
-    const { email } = req.query;
-
-    // Find all expense transactions for the given email
-    const expenses = await Transaction.find({ email, type: 'expense' });
-
-    // Calculate the total expenses
-    const totalExpenses = expenses.reduce((sum, transaction) => sum + transaction.amount, 0);
-
-    res.status(200).json({ expenses, totalExpenses });
-  } catch (error) {
-    console.error('Error occurred while fetching expenses:', error);
-    res.status(500).json({ message: 'Failed to fetch expenses', error: error.message });
-  }
-});
-
-
-app.get('/checkEmail', (req, res) => {
-  // Retrieve the email parameter from the query string
-  const email = req.query.email;
-
-  // Check if the email already exists
-  User.findOne({ email }, (err, existingUser) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error occurred during email validation', error: err.message });
-    }
+    const existingUser = await User.findOne({ email });
+    
     if (existingUser) {
       return res.status(409).json({ message: 'Email already registered. Please enter a different email' });
     }
 
-    // Email is valid and doesn't exist in the database
     res.status(200).json({ message: 'Email is valid' });
-  });
+  } catch (err) {
+    res.status(500).json({ message: 'Error occurred during email validation', error: err.message });
+  }
 });
-
 
 
 
