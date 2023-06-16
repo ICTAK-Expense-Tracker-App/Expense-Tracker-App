@@ -205,14 +205,21 @@ app.put('/UpdatePassword', async (req, res) => {
   }
 });
 
+// ...
 
 app.post('/transactions', async (req, res) => {
   try {
     const { email, type, amount, date, note } = req.body;
 
-    // Create a new expense instance
+    // Check if the email exists in the User collection
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Create a new expense instance with the user's email
     const newExpense = new Expense({
-      email,
+      email: user.email,
       type,
       amount,
       date,
@@ -228,6 +235,9 @@ app.post('/transactions', async (req, res) => {
     res.status(500).json({ message: 'Failed to register expense', error: error.message });
   }
 });
+
+// ...
+
 
 
 

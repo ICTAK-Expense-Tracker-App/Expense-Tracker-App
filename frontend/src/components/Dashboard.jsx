@@ -46,7 +46,7 @@ const Dashboard = ({userId}) => {
         const userData = response.data.user;
         // setUser(userData);
         // setUpdatedUser(userData);
-        const userEmail=response.data.user.email
+       
       } catch (error) {
         console.error('Error occurred while fetching user profile:', error);
       }
