@@ -6,7 +6,7 @@ import SignUp from './components/SignUp';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
-import Transactions from './components/Transactions';
+import Sidebar from './components/Sidebar';
 
 function App() {
   const [user, setLoginUser] = useState({});
@@ -25,10 +25,8 @@ function App() {
         <Route path="/Login" element={<Login setLoginUser={setLoginUser} />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile userId={user.email} />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/transactions" element={<Transactions />} />
-
+        <Route path="/profile" element={<Profile userId={user.email} />} />
       </Routes>
     </div>
   );

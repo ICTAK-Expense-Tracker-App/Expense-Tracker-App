@@ -179,7 +179,6 @@ app.put('/UpdatePassword', async (req, res) => {
     res.status(500).json({ message: 'Error occurred while updating password', error: error.message });
   }
 });
-
 app.post('/transactions', async (req, res) => {
 
   try {
@@ -202,6 +201,8 @@ app.post('/transactions', async (req, res) => {
     res.status(500).json({ message: 'Failed to register expense', error: error.message });
   }
 });
+
+
 
 
 app.listen(9002, () => {
