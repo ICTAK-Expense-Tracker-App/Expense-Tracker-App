@@ -129,6 +129,58 @@ app.put('/profile', async (req, res) => {
 
 // ...
 
+// ...
+
+app.post('/VerifyPassword', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const password = req.body.password;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if the provided password matches the user's current password
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    // Password verification successful
+    res.status(200).json({ message: 'Password verification successful' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred during password verification', error });
+  }
+});
+
+app.put('/UpdatePassword', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const password = req.body.password;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the user's password
+    user.password = password;
+
+    // Save the updated user profile
+    await user.save();
+
+    // Password update successful
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while updating password', error: error.message });
+  }
+});
+
+// ...
 
 
 app.listen(9002, () => {

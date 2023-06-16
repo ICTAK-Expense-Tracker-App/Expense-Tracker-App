@@ -14,7 +14,9 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <div className='sb'>
       <Sidebar handleOptionSelect={handleOptionSelect} />
+      </div>
       <div className="dashboard-content">
         <Routes>
           <Route path="/" element={<h2>Welcome to the Dashboard</h2>} />

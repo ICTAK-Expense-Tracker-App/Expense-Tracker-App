@@ -1,29 +1,48 @@
-.Sig {
-  background-image: url('../assets/pro.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  
+.profile-page {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: #f0f0f0;
+  height: 100vh;
 }
 
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
- 
+.sb {
+  width: 20%;
+  height: 100%;
+  background-color: rgb(36, 45, 53);
+}
+
+.profile-content {
+  width: 80%;
+  padding: 2rem;
 }
 
 .profile-heading {
   font-size: 2.5rem;
   color: #333;
-  margin-bottom: 2rem;
 }
 
 .profile-details {
-  margin-bottom: 2rem;
-  text-align: center;
+  padding-left: 15%;
+}
+
+.profile-field {
+  margin-bottom: 1rem;
+}
+
+.profile-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.profile-field input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .button-container {
@@ -46,4 +65,3 @@
   color: #333;
   text-decoration: none;
 }
-

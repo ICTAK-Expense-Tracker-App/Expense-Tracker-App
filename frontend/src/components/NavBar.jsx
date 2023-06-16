@@ -21,9 +21,10 @@ const NavBar = ({ isLoggedIn, handleLogout }) => {
       <AppBar position="static" className="navbar">
         <Toolbar className="toolbar">
           <div className="spacer" />
-          <Button component={Link} to="/" variant="contained" className="customButton">Home</Button>
+          
           {!isLoggedIn ? (
             <>
+            <Button component={Link} to="/" variant="contained" className="customButton">Home</Button>
               <Button component={Link} to="/Login" variant="contained" className="customButton">Login</Button>
               <Button component={Link} to="/SignUp" variant="contained" className="customButton">Sign Up</Button>
             </>
