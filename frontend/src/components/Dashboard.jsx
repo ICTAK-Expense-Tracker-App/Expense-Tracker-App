@@ -40,9 +40,9 @@ const Dashboard = ({userId}) => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:9002/profile', {
-          params: { userId: userId },
-        });
+        const response = await axios.get('http://localhost:9002/test-json', {
+  params: { userId: userId },
+});
         const userData = response.data.user;
         // setUser(userData);
         // setUpdatedUser(userData);
@@ -70,28 +70,38 @@ const Dashboard = ({userId}) => {
   const handleTransactionDateChange = (event) => {
     setTransactionDate(event.target.value);
   };
+  // useEffect(() => {
+  //   const fetchTransactions = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:9002/test-json', {
+  //         params: { email: userId },
+  //       });
+  //       const transactions = response.data;
+  //       setTransactionData(transactions);
+  //     } catch (error) {
+  //       console.error('Error occurred while fetching transactions:', error);
+  //     }
+  //   };
+
+  //   fetchTransactions();
+  // }, []);
+  
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get('http://localhost:9002/test-json', {
-          params: { userId: userId },
+        const response = await axios.get('http://localhost:9002/transactions', {
+          params: { email: userId },
         });
-
-        if (response.status === 200) {
-          const transactions = response.data;
-          setTransactionData(transactions);
-        } else {
-          console.log('Failed to fetch transactions');
-        }
+        const transactions = response.data;
+        setTransactionData(transactions);
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error occurred while fetching transactions:', error);
       }
     };
-
-    fetchTransactions();
-  }, []);
   
-
+    fetchTransactions();
+  }, [userId]);
+  
 // Fetch income details
 fetch(`/income?email=${userId}`)
   .then(response => response.json())
@@ -212,15 +222,16 @@ const handleAddTransaction = async () => {
               </tr>
             </thead>
             <tbody>
-              {transactionData.map((transaction, index) => (
-                <tr key={index}>
-                  <td>{transaction.type}</td>
-                  <td>{transaction.amount}</td>
-                  <td>{transaction.note}</td>
-                  <td>{transaction.date}</td>
-                </tr>
-              ))}
-            </tbody>
+  {transactionData.map((transaction, index) => (
+    <tr key={index}>
+      <td>{transaction.type}</td>
+      <td>{transaction.amount}</td>
+      <td>{transaction.note}</td>
+      <td>{transaction.date}</td>
+    </tr>
+  ))}
+</tbody>
+
           </table>
       </div>
     </div>

@@ -28,9 +28,10 @@ mongoose
     console.log('test')
     const userId = req.query.userId;
     const firstData = await Expense.find({email: userId}).exec();
+Expense.find({email: userId}).exec();
     console.log(firstData);
     // res.send(firstData);
-    res.status(200).json({ user });
+    res.status(200).json(firstData);
   });
 
 
@@ -233,6 +234,20 @@ app.post('/transactions', async (req, res) => {
 });
 
 
+app.get('/transactions', async (req, res) => {
+  try {
+    const email = req.query.email;
+
+    // Fetch transactions based on the provided email
+    const transactions = await Expense.find({ email }).exec();
+
+    // Return the transactions as the response
+    res.status(200).json(transactions);
+  } catch (error) {
+    console.error('Error occurred while fetching transactions:', error);
+    res.status(500).json({ message: 'Failed to fetch transactions', error: error.message });
+  }
+});
 
 
 app.get('/checkEmail', async (req, res) => {
