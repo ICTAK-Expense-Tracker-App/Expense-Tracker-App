@@ -23,7 +23,38 @@ mongoose
 
 
 app.post('/SignUp', (req, res) => {
-  const { name, place, age, email, no, password, reEnterPassword } = req.body;
+  const { name, place,education,  age, email, no, password, reEnterPassword } = req.body;
+
+  // Check if the passwords match
+  if (password !== reEnterPassword) {
+    return res.status(400).json({ message: 'Passwords do not match' });
+  }
+  //index.js
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const User = require('./model/user');
+const Expense = require('./model/expense');
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+mongoose
+  .connect('mongodb+srv://annmarywilson:annmarywilson@cluster0.fwg4655.mongodb.net/test', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error.message);
+  });
+
+
+app.post('/SignUp', (req, res) => {
+  const { name, place,education,  age, email, no, password, reEnterPassword } = req.body;
 
   // Check if the passwords match
   if (password !== reEnterPassword) {
@@ -34,6 +65,7 @@ app.post('/SignUp', (req, res) => {
   const newUser = new User({
     name: req.body.name,
     place: req.body.place,
+    education:req.body.education,
     age: req.body.age,
     email: req.body.email,
     no: req.body.no,
@@ -113,6 +145,7 @@ app.put('/profile', async (req, res) => {
     // Update the user profile
     user.name = req.body.name;
     user.place = req.body.place;
+    user.education=req.body.education;
     user.age = req.body.age;
     user.no = req.body.no;
     user.email = req.body.email;
@@ -179,6 +212,7 @@ app.put('/UpdatePassword', async (req, res) => {
     res.status(500).json({ message: 'Error occurred while updating password', error: error.message });
   }
 });
+
 app.post('/transactions', async (req, res) => {
 
   try {
@@ -203,6 +237,184 @@ app.post('/transactions', async (req, res) => {
 });
 
 
+app.listen(9002, () => {
+  console.log('Server listening on port 9002');
+});
+
+  // Create a new user instance
+  const newUser = new User({
+    name: req.body.name,
+    place: req.body.place,
+    education:req.body.education,
+    age: req.body.age,
+    email: req.body.email,
+    no: req.body.no,
+    password: req.body.password,
+    reEnterPassword: req.body.reEnterPassword
+  });
+
+  // Save the user to the database
+  newUser
+    .save()
+    .then(() => {
+      res.status(200).json({ message: 'User registered successfully' });
+    })
+    .catch((error) => {
+      res.status(500).json({ message: 'Failed to register user', error });
+    });
+});
+
+app.post('/Login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Find the user with the provided email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User doesn\'t exist' });
+    }
+
+    // Check if the password is correct
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    // User login successful
+    res.status(200).json({ message: 'Login successful', user })
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred during login', error });
+  }
+});
+
+app.get('/profile', async (req, res) => {
+  try {
+    const userId = req.query.userId;
+
+    
+    // Fetch the user details based on the user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return the user profile details
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while fetching user profile', error: error.message });
+  }
+});
+
+
+// ...
+
+app.put('/profile', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the user profile
+    user.name = req.body.name;
+    user.place = req.body.place;
+    user.education=req.body.education;
+    user.age = req.body.age;
+    user.no = req.body.no;
+    user.email = req.body.email;
+
+    // Save the updated user profile
+    await user.save();
+
+    // Return the updated user profile
+    res.status(200).json({ message: 'User profile updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while updating user profile', error: error.message });
+  }
+});
+
+// ...
+
+// ...
+
+app.post('/VerifyPassword', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const password = req.body.password;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if the provided password matches the user's current password
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    // Password verification successful
+    res.status(200).json({ message: 'Password verification successful' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred during password verification', error });
+  }
+});
+
+app.put('/UpdatePassword', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const password = req.body.password;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the user's password
+    user.password = password;
+
+    // Save the updated user profile
+    await user.save();
+
+    // Password update successful
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while updating password', error: error.message });
+  }
+});
+
+app.post('/transactions', async (req, res) => {
+
+  try {
+    const { type, amount, date, note } = req.body;
+
+    // Create a new expense instance
+    const newExpense = new Expense({
+      type,
+      amount,
+      date,
+      note,
+    });
+
+    // Save the expense to the database
+    const savedExpense = await newExpense.save();
+
+    res.status(200).json(savedExpense); // Return the saved expense object as the response
+  } catch (error) {
+    console.error('Error occurred while saving expense:', error);
+    res.status(500).json({ message: 'Failed to register expense', error: error.message });
+  }
+});
 
 
 app.listen(9002, () => {

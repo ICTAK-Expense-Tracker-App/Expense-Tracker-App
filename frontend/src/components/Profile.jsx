@@ -119,6 +119,7 @@ const handleSave = async () => {
       userId: user.email, // Pass the userId in the request body
       name: updatedUser.name,
       place: updatedUser.place,
+      education:updatedUser.education,
       age: updatedUser.age,
       no: updatedUser.no,
       email: updatedUser.email,
@@ -166,6 +167,20 @@ return (
             />
           ) : (
             <span>{user.place}</span>
+          )}
+        </div>
+
+        <div className="profile-field">
+          <label>Education:</label>
+          {editing ? (
+            <input
+              type="text"
+              name="education"
+              value={updatedUser.education || ''}
+              onChange={handleInputChange}
+            />
+          ) : (
+            <span>{user.education}</span>
           )}
         </div>
 

@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
+import Transactions from './components/Transactions';
 
 function App() {
   const [user, setLoginUser] = useState({});
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile userId={user.email} />} />
+        <Route path='/transactions' element={<Transactions/>}/>
       </Routes>
     </div>
   );
