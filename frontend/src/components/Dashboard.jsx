@@ -1,183 +1,266 @@
-import React, { useState } from 'react';
-import './Dashboard.css';
-import { useEffect } from 'react';
-import Sidebar from './Sidebar';
-import Profile from './Profile';
-import axios from 'axios';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  MenuItem,
-  Select,
-  TextField
-} from '@material-ui/core';
-import './Transactions.css';
+//index.js
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const User = require('./model/user');
+const Expense = require('./model/expense');
+const { ObjectId } = require('mongodb');
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-const Dashboard = ({userId}) => {
-  const [selectedOption, setSelectedOption] = useState('');
+mongoose
+  .connect('mongodb+srv://annmarywilson:annmarywilson@cluster0.fwg4655.mongodb.net/test', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error.message);
+  });
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-  };
-  const [openDialog, setOpenDialog] = useState(false);
-  const [transactionType, setTransactionType] = useState('');
-  const [transactionAmount, setTransactionAmount] = useState('');
-  const [transactionNote, setTransactionNote] = useState('');
-  const [transactionDate, setTransactionDate] = useState('');
-  const [transactionData, setTransactionData] = useState([]);
-  const [user, setUser] = useState({});
-  const handleOpenDialog = () => {
-    setOpenDialog(true);
-  };
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
 
- 
-  const handleTransactionTypeChange = (event) => {
-    setTransactionType(event.target.value);
-  };
-
-  const handleTransactionAmountChange = (event) => {
-    setTransactionAmount(event.target.value);
-  };
-
-  const handleTransactionNoteChange = (event) => {
-    setTransactionNote(event.target.value);
-  };
-
-  const handleTransactionDateChange = (event) => {
-    setTransactionDate(event.target.value);
-  };
- 
-    const fetchTransactions = async () => {
-      try {
-        const response = await axios.get('http://localhost:9002/transactions', {
-          params: { email: userId }, // Replace userEmail with the user's email or userId
-        });
+  app.post('/test-json', async (req, res) => {
+    console.log('test')
     
-        if (response.status === 200) {
-          const transactions = response.data;
-          setTransactionData(transactions);
-        } else {
-          console.log('Failed to fetch transactions');
-        }
-      } catch (error) {
-        console.error('Error:', error);
+    const firstData = await Expense.find({email: "test@gmail.com"}).exec();
+    console.log(firstData);
+    res.send(firstData);
+  });
+
+
+  app.post('/SignUp', (req, res) => {
+    const { name, place, education, age, email, no, password, reEnterPassword } = req.body;
+  
+    // Check if the passwords match
+    if (password !== reEnterPassword) {
+      return res.status(400).json({ message: 'Passwords do not match' });
+    }
+  
+    // Check if the email already exists
+    User.findOne({ email }, (err, existingUser) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error occurred during signup', error: err.message });
       }
-    };
+      if (existingUser) {
+        return res.status(409).json({ message: 'Email already registered. Please enter a different email' });
+      }
+  
+      // Create a new user instance
+      const newUser = new User({
+        name,
+        place,
+        education,
+        age,
+        email,
+        no,
+        password,
+      });
+  
+      // Save the user to the database
+      newUser
+        .save()
+        .then(() => {
+          res.status(200).json({ message: 'User registered successfully' });
+        })
+        .catch((error) => {
+          res.status(500).json({ message: 'Failed to register user', error });
+        });
+    });
+  });
+  
+  
   
 
-
-const handleAddTransaction = async () => {
-  const newTransaction = {
-    email:userId, // Assuming you have the email stored in the "user.email" variable
-    type: transactionType,
-    amount: transactionAmount,
-    note: transactionNote,
-    date: transactionDate,
-  };
+app.post('/Login', async (req, res) => {
+  const { email, password } = req.body;
 
   try {
-    const response = await axios.post('http://localhost:9002/transactions', newTransaction);
+    // Find the user with the provided email
+    const user = await User.findOne({ email });
 
-    if (response.status === 200) {
-      console.log('Transaction added successfully');
-      const transaction = response.data;
-      setTransactionData([...transactionData, transaction]);
-      alert('Transaction added successfully'); // Show alert
-    } else {
-      console.log('Failed to add transaction');
+    if (!user) {
+      return res.status(404).json({ message: 'User doesn\'t exist' });
     }
-  } catch (error) {
-    console.error('Error:', error);
-  }
 
-  handleCloseDialog();
-};
+    // Check if the password is correct
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    // User login successful
+    res.status(200).json({ message: 'Login successful', user })
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred during login', error });
+  }
+});
+
+app.get('/profile', async (req, res) => {
+  try {
+    const userId = req.query.userId;
+
+    
+    // Fetch the user details based on the user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return the user profile details
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while fetching user profile', error: error.message });
+  }
+});
+
 
 // ...
 
+app.put('/profile', async (req, res) => {
+  try {
+    const userId = req.body.userId;
 
-  
-  return (
-    <div className="dashboard-container">
-      <div className='sb'>
-      <Sidebar handleOptionSelect={handleOptionSelect} />
-      </div>
-      <div className="dashboard-content">
-          <h1>Income and Expenses</h1>
-          <Button
-            variant="contained"
-            color="primary"
-            className="add-button"
-            onClick={handleOpenDialog}
-          >
-            +
-          </Button>
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
 
-          <Dialog open={openDialog} onClose={handleCloseDialog}>
-            <DialogTitle>Add New Transaction</DialogTitle>
-            <DialogContent>
-              <Select value={transactionType} onChange={handleTransactionTypeChange}>
-                <MenuItem value="expense">Expense</MenuItem>
-                <MenuItem value="income">Income</MenuItem>
-              </Select>
-              <TextField
-                label="Amount"
-                type="number"
-                value={transactionAmount}
-                onChange={handleTransactionAmountChange}
-              />
-              <TextField
-                label="Note"
-                value={transactionNote}
-                onChange={handleTransactionNoteChange}
-              />
-              <TextField
-                label="Date"
-                type="date"
-                value={transactionDate}
-                onChange={handleTransactionDateChange}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseDialog} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={handleAddTransaction} color="primary">
-                Add
-              </Button>
-            </DialogActions>
-          </Dialog>
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-          <table>
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Note</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactionData.map((transaction, index) => (
-                <tr key={index}>
-                  <td>{transaction.type}</td>
-                  <td>{transaction.amount}</td>
-                  <td>{transaction.note}</td>
-                  <td>{transaction.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-      </div>
-    </div>
-  );
-};
+    // Update the user profile
+    user.name = req.body.name;
+    user.place = req.body.place;
+    user.education=req.body.education;
+    user.age = req.body.age;
+    user.no = req.body.no;
+    user.email = req.body.email;
 
-export default Dashboard;
+    // Save the updated user profile
+    await user.save();
+
+    // Return the updated user profile
+    res.status(200).json({ message: 'User profile updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while updating user profile', error: error.message });
+  }
+});
+
+// ...
+
+// ...
+
+app.post('/VerifyPassword', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const password = req.body.password;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if the provided password matches the user's current password
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    // Password verification successful
+    res.status(200).json({ message: 'Password verification successful' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred during password verification', error });
+  }
+});
+
+app.put('/UpdatePassword', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const password = req.body.password;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the user's password
+    user.password = password;
+
+    // Save the updated user profile
+    await user.save();
+
+    // Password update successful
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while updating password', error: error.message });
+  }
+});
+
+// ...
+
+app.post('/transactions', async (req, res) => {
+  try {
+    const { email, type, amount, date, note } = req.body;
+
+    // Check if the email exists in the User collection
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Create a new expense instance with the user's email
+    const newExpense = new Expense({
+      email: user.email,
+      type,
+      amount,
+      date,
+      note,
+    });
+
+    // Save the expense to the database
+    const savedExpense = await newExpense.save();
+
+    res.status(200).json(savedExpense); // Return the saved expense object as the response
+  } catch (error) {
+    console.error('Error occurred while saving expense:', error);
+    res.status(500).json({ message: 'Failed to register expense', error: error.message });
+  }
+});
+
+
+
+
+app.get('/checkEmail', async (req, res) => {
+  try {
+    const email = req.query.email;
+    console.log(email);
+
+    const existingUser = await User.findOne({ email });
+    
+    if (existingUser) {
+      return res.status(409).json({ message: 'Email already registered. Please enter a different email' });
+    }
+
+    res.status(200).json({ message: 'Email is valid' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error occurred during email validation', error: err.message });
+  }
+});
+
+
+
+
+
+
+app.listen(9002, () => {
+  console.log('Server listening on port 9002');
+});
