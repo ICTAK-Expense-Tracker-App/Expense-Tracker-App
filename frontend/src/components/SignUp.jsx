@@ -43,8 +43,12 @@ const SignUp = () => {
         handleFormSubmit();
       })
       .catch((err) => {
-        console.log('Error occurred while checking email:', err);
-        alert('Failed to check email. Please try again later.');
+        if (err.response && err.response.status === 409) {
+          alert(err.response.data.message);
+        } else {
+          console.log('Error occurred while checking email:', err);
+          alert('Failed to check email. Please try again later.');
+        }
       });
   };
 
