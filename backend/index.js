@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const User = require('./model/user');
 const Expense = require('./model/expense');
+const { ObjectId } = require('mongodb');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +22,15 @@ mongoose
     console.error('Error connecting to MongoDB:', error.message);
   });
 
+
+
+  app.post('/test-json', async (req, res) => {
+    console.log('test')
+    
+    const firstData = await Expense.find({email: "test@gmail.com"}).exec();
+    console.log(firstData);
+    res.send(firstData);
+  });
 
 
   app.post('/SignUp', (req, res) => {
@@ -195,13 +205,14 @@ app.put('/UpdatePassword', async (req, res) => {
   }
 });
 
-app.post('/transactions', async (req, res) => {
 
+app.post('/transactions', async (req, res) => {
   try {
-    const { type, amount, date, note } = req.body;
+    const { email, type, amount, date, note } = req.body;
 
     // Create a new expense instance
     const newExpense = new Expense({
+      email,
       type,
       amount,
       date,
@@ -215,6 +226,42 @@ app.post('/transactions', async (req, res) => {
   } catch (error) {
     console.error('Error occurred while saving expense:', error);
     res.status(500).json({ message: 'Failed to register expense', error: error.message });
+  }
+});
+
+
+
+app.get('/income', async (req, res) => {
+  try {
+    const { email } = req.query;
+
+    // Find all income transactions for the given email
+    const income = await Transaction.find({ email, type: 'income' });
+
+    // Calculate the total income
+    const totalIncome = income.reduce((sum, transaction) => sum + transaction.amount, 0);
+
+    res.status(200).json({ income, totalIncome });
+  } catch (error) {
+    console.error('Error occurred while fetching income:', error);
+    res.status(500).json({ message: 'Failed to fetch income', error: error.message });
+  }
+});
+
+app.get('/expenses', async (req, res) => {
+  try {
+    const { email } = req.query;
+
+    // Find all expense transactions for the given email
+    const expenses = await Transaction.find({ email, type: 'expense' });
+
+    // Calculate the total expenses
+    const totalExpenses = expenses.reduce((sum, transaction) => sum + transaction.amount, 0);
+
+    res.status(200).json({ expenses, totalExpenses });
+  } catch (error) {
+    console.error('Error occurred while fetching expenses:', error);
+    res.status(500).json({ message: 'Failed to fetch expenses', error: error.message });
   }
 });
 
@@ -236,6 +283,11 @@ app.get('/checkEmail', (req, res) => {
     res.status(200).json({ message: 'Email is valid' });
   });
 });
+
+
+
+
+
 
 
 app.listen(9002, () => {

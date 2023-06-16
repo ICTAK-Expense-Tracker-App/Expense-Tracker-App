@@ -51,7 +51,7 @@ const Profile = ({ userId }) => {
         });
         const userData = response.data.user;
         setUser(userData);
-        setUpdatedUser(userData);
+         setUpdatedUser(userData);
       } catch (error) {
         console.error('Error occurred while fetching user profile:', error);
       }

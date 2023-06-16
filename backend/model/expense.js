@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
 
 const expenseSchema = new mongoose.Schema({
+  email:{
+    type:String,
+    requied:true,
+  },
   type: {
     type: String,
+    enum:['income','expense'],
     required: true,
   },
   amount: {
