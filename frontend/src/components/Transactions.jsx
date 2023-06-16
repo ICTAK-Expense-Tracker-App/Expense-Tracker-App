@@ -53,19 +53,20 @@ const Transactions = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:9002/transactions', newTransaction);
-
-      if (response.status === 200) {
-        console.log('Transaction added successfully');
-        const transaction = response.data;
-        setTransactionData([...transactionData, transaction]);
-      } else {
-        console.log('Failed to add transaction');
+        const response = await axios.post('http://localhost:9002/transactions', newTransaction);
+      
+        if (response.status === 200) {
+          console.log('Transaction added successfully');
+          const transaction = response.data;
+          setTransactionData([...transactionData, transaction]);
+          alert('Transaction added successfully'); // Show alert
+        } else {
+          console.log('Failed to add transaction');
+        }
+      } catch (error) {
+        console.error('Error:', error);
       }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-
+      
     handleCloseDialog();
   };
 

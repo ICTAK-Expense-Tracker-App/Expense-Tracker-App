@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const User = require('./model/user');
-
+const Expense = require('./model/expense');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -129,6 +129,79 @@ app.put('/profile', async (req, res) => {
 
 // ...
 
+// ...
+
+app.post('/VerifyPassword', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const password = req.body.password;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if the provided password matches the user's current password
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    // Password verification successful
+    res.status(200).json({ message: 'Password verification successful' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred during password verification', error });
+  }
+});
+
+app.put('/UpdatePassword', async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const password = req.body.password;
+
+    // Find the user with the provided user ID
+    const user = await User.findOne({ email: decodeURIComponent(userId) });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the user's password
+    user.password = password;
+
+    // Save the updated user profile
+    await user.save();
+
+    // Password update successful
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while updating password', error: error.message });
+  }
+});
+
+app.post('/transactions', async (req, res) => {
+
+  try {
+    const { type, amount, date, note } = req.body;
+
+    // Create a new expense instance
+    const newExpense = new Expense({
+      type,
+      amount,
+      date,
+      note,
+    });
+
+    // Save the expense to the database
+    const savedExpense = await newExpense.save();
+
+    res.status(200).json(savedExpense); // Return the saved expense object as the response
+  } catch (error) {
+    console.error('Error occurred while saving expense:', error);
+    res.status(500).json({ message: 'Failed to register expense', error: error.message });
+  }
+});
 
 
 app.listen(9002, () => {
