@@ -370,6 +370,34 @@ app.delete('/transactions/:transactionId', async (req, res) => {
   }
 });
 
+app.put('/transactions/:transactionId', async (req, res) => {
+  try {
+    const transactionId = req.params.transactionId;
+    const { email, type, amount, date, note } = req.body;
+
+    // Find the transaction by its ID
+    const transaction = await Expense.findById(transactionId);
+
+    if (!transaction) {
+      return res.status(404).json({ message: 'Transaction not found' });
+    }
+
+    // Update the transaction properties
+    transaction.email = email;
+    transaction.type = type;
+    transaction.amount = amount;
+    transaction.date = date;
+    transaction.note = note;
+
+    // Save the updated transaction to the database
+    await transaction.save();
+
+    res.status(200).json({ message: 'Transaction updated successfully', transaction });
+  } catch (error) {
+    console.error('Error occurred while updating transaction:', error);
+    res.status(500).json({ message: 'Failed to update transaction', error: error.message });
+  }
+});
 
 
 

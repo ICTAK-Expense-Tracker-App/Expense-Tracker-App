@@ -23,6 +23,18 @@ const Dashboard = ({ userId }) => {
     setSelectedOption(option);
   };
 
+  const [editTransaction, setEditTransaction] = useState({});
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+
+  const handleOpenEditDialog = (transaction) => {
+    setEditTransaction(transaction);
+    setOpenEditDialog(true);
+  };
+
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+  };
+
   const [openDialog, setOpenDialog] = useState(false);
   const [transactionType, setTransactionType] = useState('');
   const [transactionAmount, setTransactionAmount] = useState('');
@@ -40,8 +52,7 @@ const Dashboard = ({ userId }) => {
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
-
-  useEffect(() => {
+ useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get('http://localhost:9002/test-json', {
@@ -76,6 +87,37 @@ const Dashboard = ({ userId }) => {
     }
   };
   
+
+
+const handleUpdateTransactions = async () => {
+  try {
+    const response = await axios.put(
+      `http://localhost:9002/transactions/${editTransaction._id}`,
+      editTransaction
+    );
+
+    if (response.status === 200) {
+      console.log('Transaction updated successfully');
+      // Update the transaction data with the updated transaction
+      const updatedTransactions = transactionData.map((transaction) =>
+        transaction._id === editTransaction._id ? editTransaction : transaction
+      );
+      setTransactionData(updatedTransactions);
+     
+      alert('Transaction updated successfully');
+    } else {
+      console.log('Failed to update transaction');
+    }
+  } catch (error) {
+    console.error('Error updating transaction:', error);
+    alert('Failed to update transaction');
+  }
+
+  handleCloseEditDialog();
+};
+
+
+
 
   const handleTransactionTypeChange = (event) => {
     setTransactionType(event.target.value);
@@ -162,6 +204,7 @@ const Dashboard = ({ userId }) => {
     handleCloseDialog();
   };
 
+
   return (
     <div className="dashboard-container">
       <div className="sb">
@@ -182,16 +225,16 @@ const Dashboard = ({ userId }) => {
         <Button
           variant="contained"
           color="primary"
-          className="add-button" 
+          className="add-button"
           onClick={handleOpenDialog}
         >
           + Add new Transaction
         </Button>
 
         <Dialog open={openDialog} onClose={handleCloseDialog}>
-          <DialogTitle>Add New Transaction</DialogTitle>
+          <DialogTitle>Add Transaction</DialogTitle>
           <DialogContent>
-            <Select value={transactionType} onChange={handleTransactionTypeChange}>
+           <Select value={transactionType} onChange={handleTransactionTypeChange}>
               <MenuItem value="expense">Expense</MenuItem>
               <MenuItem value="income">Income</MenuItem>
             </Select>
@@ -240,11 +283,11 @@ const Dashboard = ({ userId }) => {
                 <td>{transaction.note}</td>
                 <td>{transaction.date}</td>
                 <td>
-                  <button>
+                  <button onClick={() => handleOpenEditDialog(transaction)}>
                     <Edit />
                   </button>
                 </td>
-                <td>
+                 <td>
                   <button onClick={() => handleDeleteTransaction(transaction._id)}> 
                     <Delete />
                   </button>
@@ -253,9 +296,62 @@ const Dashboard = ({ userId }) => {
             ))}
           </tbody>
         </table>
+
+        <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
+          <DialogTitle>Edit Transaction</DialogTitle>
+          <DialogContent>
+          <Select value={transactionType} onChange={handleTransactionTypeChange}>
+              <MenuItem value="expense">Expense</MenuItem>
+              <MenuItem value="income">Income</MenuItem>
+            </Select>
+            <TextField
+              label="Amount"
+              type="number"
+              value={transactionAmount}
+              onChange={handleTransactionAmountChange}
+            />
+            <TextField
+              label="Note"
+              value={transactionNote}
+              onChange={handleTransactionNoteChange}
+            />
+            <TextField
+              label="Date"
+              type="date"
+              value={transactionDate}
+              onChange={handleTransactionDateChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseEditDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleUpdateTransactions} color="primary">
+              Update
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );
 };
 
 export default Dashboard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
