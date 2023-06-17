@@ -29,6 +29,9 @@ const Dashboard = ({userId}) => {
   const [transactionDate, setTransactionDate] = useState('');
   const [transactionData, setTransactionData] = useState([]);
   const [user, setUser] = useState({});
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
@@ -70,21 +73,32 @@ const Dashboard = ({userId}) => {
   const handleTransactionDateChange = (event) => {
     setTransactionDate(event.target.value);
   };
-  // useEffect(() => {
-  //   const fetchTransactions = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:9002/test-json', {
-  //         params: { email: userId },
-  //       });
-  //       const transactions = response.data;
-  //       setTransactionData(transactions);
-  //     } catch (error) {
-  //       console.error('Error occurred while fetching transactions:', error);
-  //     }
-  //   };
-
-  //   fetchTransactions();
-  // }, []);
+ 
+  
+  useEffect(() => {
+    const fetchIncomeAndExpenses = async () => {
+      try {
+        const Response = await axios.get('http://localhost:9002/totals', {
+          params: { email: userId },
+        });
+        const { totalIncome } = Response.data.totalIncome;
+        setTotalIncome(totalIncome);
+  
+        
+        const { totalExpenses } = Response.data.totalExpense;
+        setTotalExpenses(totalExpenses);
+      } catch (error) {
+        console.error('Error fetching income and expenses:', error);
+      }
+    };
+  
+    if (userId) {
+      fetchIncomeAndExpenses();
+    }
+  }, [userId]);
+  
+  
+  
   
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -167,6 +181,16 @@ const handleAddTransaction = async () => {
       <Sidebar handleOptionSelect={handleOptionSelect} />
       </div>
       <div className="dashboard-content">
+      <div className="summary-container">
+        <div className="summary-box">
+          <h3>Total Income</h3>
+          <p>{totalIncome}</p>
+        </div>
+        <div className="summary-box">
+          <h3>Total Expenses</h3>
+          <p>{totalExpenses}</p>
+        </div>
+      </div>
           <h1>Income and Expenses</h1>
           <Button
             variant="contained"

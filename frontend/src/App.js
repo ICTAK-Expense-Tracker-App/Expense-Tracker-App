@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
 import Transactions from './components/Transactions';
+import Admin from './components/Admin'
 
 function App() {
   const [user, setLoginUser] = useState({});
@@ -29,6 +30,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard userId={user.email}/>} />
         <Route path="/profile" element={<Profile userId={user.email} />} />
         <Route path='/transactions' element={<Transactions/>}/>
+        <Route path='/Admin' element={<Admin/>}/>
       </Routes>
     </div>
   );

@@ -23,3 +23,26 @@
 .dashboard-content h2 {
   margin: 0;
 }
+
+.summary-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.summary-box {
+  width: 45%;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.summary-box h3 {
+  margin: 0;
+}
+
+.summary-box p {
+  font-weight: bold;
+  font-size: 18px;
+  color: rgb(41, 65, 57);
+}

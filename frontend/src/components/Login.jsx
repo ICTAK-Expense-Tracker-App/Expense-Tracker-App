@@ -23,20 +23,26 @@ const Login = ({ setLoginUser }) => {
   };
 
   const handleLogin = () => {
-    axios
-      .post('http://localhost:9002/login', user)
-      .then((res) => {
-        alert(res.data.message);
-        setLoginUser(res.data.user);
-        navigate('/dashboard');
-      })
-      .catch((error) => {
-        if (error.response && error.response.data) {
-          alert(error.response.data.message);
-        } else {
-          console.log('Error occurred during login', error);
-        }
-      });
+    if (user.email === 'admin@gmail.com' && user.password === 'admin@123') {
+      // If the login is for admin
+      navigate('/Admin');
+    } else {
+      // If the login is for a regular user
+      axios
+        .post('http://localhost:9002/login', user)
+        .then((res) => {
+          alert(res.data.message);
+          setLoginUser(res.data.user);
+          navigate('/dashboard');
+        })
+        .catch((error) => {
+          if (error.response && error.response.data) {
+            alert(error.response.data.message);
+          } else {
+            console.log('Error occurred during login', error);
+          }
+        });
+    }
   };
 
   return (
