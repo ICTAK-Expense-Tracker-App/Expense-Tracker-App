@@ -17,19 +17,29 @@ const Admin = () => {
       });
   }, []);
 
-  const handleBlockUser = (userId) => {
-    // Block the user with the given userId
-    // Implement the blocking logic on the server-side
-    // You can use Axios to send a POST request to the server-side endpoint
-    console.log('Block user with ID:', userId);
-  };
 
-  const handleDeleteUser = (userId) => {
-    // Delete the user with the given userId
-    // Implement the delete logic on the server-side
-    // You can use Axios to send a DELETE request to the server-side endpoint
-    console.log('Delete user with ID:', userId);
+  const handleBlockUser = (userId) => {
+    axios
+      .post(`http://localhost:9002/blockUser/${userId}`)
+      .then((res) => {
+        console.log('User blocked successfully');
+        // Perform any additional actions after blocking the user
+      })
+      .catch((error) => {
+        console.log('Error occurred while blocking user:', error);
+        // Handle any error that occurs while blocking the user
+      });
   };
+  
+  const handleDeleteUser = (userId) => {
+    axios.delete("http://localhost:9002/delete/"+userId)
+        .then(((response)=>{
+            alert("deleted")
+            window.location.reload(false)
+        }))
+        .catch(err=>console.log(err))
+  };
+  
 
   return (
     <div>
@@ -50,8 +60,8 @@ const Admin = () => {
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <Button onClick={() => handleBlockUser(user.id)}>Block</Button>
-                  <Button onClick={() => handleDeleteUser(user.id)}>Delete</Button>
+                  <Button onClick={() => handleBlockUser(user._id)}>Block</Button>
+                  <Button onClick={() => handleDeleteUser(user._id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
