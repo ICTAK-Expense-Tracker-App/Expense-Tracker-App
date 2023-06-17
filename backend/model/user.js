@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
   no: Number,
   password: String,
   education:String,
+  status:{
+    type:String,
+    enum:['blocked','unblocked'],
+    required: true,
+    default:'unblocked',
+  },
 });
 
 const User = mongoose.model('User', userSchema);

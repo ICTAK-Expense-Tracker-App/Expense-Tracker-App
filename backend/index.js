@@ -23,16 +23,46 @@ mongoose
   });
 
 
+// ...
 
-  app.post('/test-json', async (req, res) => {
-    console.log('test')
-    const userId = req.query.userId;
-    const firstData = await Expense.find({email: userId}).exec();
-Expense.find({email: userId}).exec();
-    console.log(firstData);
-    // res.send(firstData);
-    res.status(200).json(firstData);
-  });
+app.post('/blockUser/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // Find the user by their ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the user's status field to indicate that they are blocked
+    user.status = 'blocked';
+
+    // Save the updated user to the database
+    await user.save();
+
+    res.status(200).json({ message: 'User blocked successfully' });
+  } catch (error) {
+    console.error('Error occurred while blocking user:', error);
+    res.status(500).json({ message: 'Failed to block user', error: error.message });
+  }
+});
+
+app.delete('/delete/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    await User.findByIdAndDelete(userId);
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error occurred while deleting user:', error);
+    res.status(500).json({ message: 'Failed to delete user', error: error.message });
+  }
+});
+
+// ...
+
 
 
   app.post('/SignUp', (req, res) => {
@@ -78,6 +108,8 @@ Expense.find({email: userId}).exec();
   
   
 
+// ...
+
 app.post('/Login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -89,17 +121,25 @@ app.post('/Login', async (req, res) => {
       return res.status(404).json({ message: 'User doesn\'t exist' });
     }
 
+    // Check if the user is blocked
+    if (user.status === 'blocked') {
+      return res.status(401).json({ message: 'User blocked by admin' });
+    }
+
     // Check if the password is correct
     if (user.password !== password) {
       return res.status(401).json({ message: 'Incorrect password' });
     }
 
     // User login successful
-    res.status(200).json({ message: 'Login successful', user })
+    res.status(200).json({ message: 'Login successful', user });
   } catch (error) {
     res.status(500).json({ message: 'Error occurred during login', error });
   }
 });
+
+// ...
+
 
 app.get('/profile', async (req, res) => {
   try {
@@ -122,6 +162,19 @@ app.get('/profile', async (req, res) => {
   }
 });
 
+
+app.get('/users', async (req, res) => {
+  try {
+    // Fetch all users from the database
+    const users = await User.find({}).exec();
+
+    // Return the list of users as the response
+    res.status(200).json(users);
+  } catch (error) {
+    console.error('Error occurred while fetching users:', error);
+    res.status(500).json({ message: 'Failed to fetch users', error: error.message });
+  }
+});
 
 // ...
 
@@ -248,6 +301,39 @@ app.get('/transactions', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch transactions', error: error.message });
   }
 });
+
+
+app.get('/totals', async (req, res) => {
+  try {
+    // Get the user ID from the decoded token
+    const userId = req.query.email
+
+    // Find the user with the provided ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Calculate the total income and expense
+    let totalIncome = 0;
+    let totalExpense = 0;
+
+    user.transactions.forEach(transaction => {
+      if (transaction.type === 'income') {
+        totalIncome += transaction.amount;
+      } else if (transaction.type === 'expense') {
+        totalExpense += transaction.amount;
+      }
+    });
+
+    res.status(200).json({ totalIncome, totalExpense });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while calculating totals', error: error.message });
+  }
+});
+
+
 
 
 app.get('/checkEmail', async (req, res) => {
