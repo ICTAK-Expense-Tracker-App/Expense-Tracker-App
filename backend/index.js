@@ -305,9 +305,11 @@ app.get('/transactions', async (req, res) => {
 
 app.get('/totals', async (req, res) => {
   try {
-    // Get the user ID from the decoded token
+    // Get the email from the request query parameters
     const email = req.query.email;
 
+    // Find the user with the provided email
+    const user = await User.findOne({ email }).exec();
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -320,21 +322,19 @@ app.get('/totals', async (req, res) => {
     let totalIncome = 0;
     let totalExpense = 0;
 
-    transactions.forEach(transactions => {
-      if (transactions.type === 'income') {
-        totalIncome += transactions.amount;
-      } else if (transactions.type === 'expense') {
-        totalExpense += transactions.amount;
+    transactions.forEach(transaction => {
+      if (transaction.type === 'income') {
+        totalIncome += transaction.amount;
+      } else if (transaction.type === 'expense') {
+        totalExpense += transaction.amount;
       }
     });
-    
+
     res.status(200).json({ totalIncome, totalExpense });
   } catch (error) {
     res.status(500).json({ message: 'Error occurred while calculating totals', error: error.message });
   }
 });
-
-
 
 
 

@@ -78,16 +78,15 @@ const Dashboard = ({userId}) => {
   useEffect(() => {
     const fetchIncomeAndExpenses = async () => {
       try {
-        const Response = await axios.get('http://localhost:9002/totals', {
+        const response = await axios.get('http://localhost:9002/totals', {
           params: { email: userId },
         });
-        console.log(Response.data.totalIncome)
-        const { totalIncome } = Response.data.totalIncome;
+        console.log(response.data.totalIncome);
+        const { totalIncome } = response.data;
         setTotalIncome(totalIncome);
-  
         
-        const { totalExpenses } = Response.data.totalExpense;
-        setTotalExpenses(totalExpenses);
+        const { totalExpense } = response.data;
+        setTotalExpenses(totalExpense);
       } catch (error) {
         console.error('Error fetching income and expenses:', error);
       }
@@ -97,6 +96,7 @@ const Dashboard = ({userId}) => {
       fetchIncomeAndExpenses();
     }
   }, [userId]);
+  
   
   
   
