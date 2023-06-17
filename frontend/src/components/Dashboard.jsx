@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import axios from 'axios';
+import { Delete, Edit } from '@mui/icons-material';
+
 import {
   Button,
   Dialog,
@@ -162,10 +164,10 @@ const Dashboard = ({ userId }) => {
         <Button
           variant="contained"
           color="primary"
-          className="add-button"
+          className="add-button" 
           onClick={handleOpenDialog}
         >
-          +
+          + Add new Transaction
         </Button>
 
         <Dialog open={openDialog} onClose={handleCloseDialog}>
@@ -219,6 +221,16 @@ const Dashboard = ({ userId }) => {
                 <td>{transaction.amount}</td>
                 <td>{transaction.note}</td>
                 <td>{transaction.date}</td>
+                <td>
+                  <button>
+                    <Edit />
+                  </button>
+                </td>
+                <td>
+                  <button>
+                    <Delete />
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

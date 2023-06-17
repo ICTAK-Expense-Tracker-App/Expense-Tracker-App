@@ -28,10 +28,12 @@
 
 .profile-field {
   margin-bottom: 1rem;
+  display: flex;
+  
 }
 
 .profile-field label {
-  display: block;
+  display: flex;
   margin-bottom: 0.5rem;
   font-size: 1rem;
   color: #333;

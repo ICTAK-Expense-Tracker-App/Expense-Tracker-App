@@ -31,16 +31,16 @@ const Sidebar = ({ handleOptionSelect }) => {
           onClick={() => handleOptionSelect('profile')}
           component={Link}
           to="/profile"
-          className="customButton"
+          className="customButton1"
         >
           Profile
         </Button>
-        <br />
+        <br /><br />
         <Button
           onClick={() => handleOptionSelect('income')}
           component={Link}
           to="/dashboard"
-          className="customButton"
+          className="customButton1"
         >
           Income/Expenses
         </Button>
