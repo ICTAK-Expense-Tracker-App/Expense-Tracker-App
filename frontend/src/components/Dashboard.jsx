@@ -59,6 +59,24 @@ const Dashboard = ({ userId }) => {
     fetchUserProfile();
   }, [userId]);
 
+  const handleDeleteTransaction = async (transactionId) => {
+    try {
+      await axios.delete(`http://localhost:9002/transactions/${transactionId}`);
+  
+      // Filter out the deleted transaction from the transactionData
+      const updatedTransactions = transactionData.filter(
+        (transaction) => transaction._id !== transactionId
+      );
+      setTransactionData(updatedTransactions);
+      fetchIncomeAndExpenses(); // Update the income and expenses after deletion
+      alert('Transaction deleted successfully');
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+      alert('Failed to delete transaction');
+    }
+  };
+  
+
   const handleTransactionTypeChange = (event) => {
     setTransactionType(event.target.value);
   };
@@ -227,7 +245,7 @@ const Dashboard = ({ userId }) => {
                   </button>
                 </td>
                 <td>
-                  <button>
+                  <button onClick={() => handleDeleteTransaction(transaction._id)}> 
                     <Delete />
                   </button>
                 </td>

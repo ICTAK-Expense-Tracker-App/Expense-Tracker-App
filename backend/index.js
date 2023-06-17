@@ -356,6 +356,19 @@ app.get('/checkEmail', async (req, res) => {
 });
 
 
+app.delete('/transactions/:transactionId', async (req, res) => {
+  try {
+    const transactionId = req.params.transactionId;
+
+    // Find the transaction by its ID and delete it
+    await Expense.findByIdAndDelete(transactionId);
+
+    res.status(200).json({ message: 'Transaction deleted successfully' });
+  } catch (error) {
+    console.error('Error occurred while deleting transaction:', error);
+    res.status(500).json({ message: 'Failed to delete transaction', error: error.message });
+  }
+});
 
 
 
