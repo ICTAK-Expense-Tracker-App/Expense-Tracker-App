@@ -27,13 +27,17 @@ const Login = ({ setLoginUser }) => {
       // If the login is for admin
       navigate('/Admin');
     } else {
-      // If the login is for a regular user
       axios
         .post('http://localhost:9002/login', user)
         .then((res) => {
-          alert(res.data.message);
-          setLoginUser(res.data.user);
-          navigate('/dashboard');
+          const { message, user: loggedInUser, blocked } = res.data;
+          if (blocked) {
+            alert("Can't login. User is blocked.");
+          } else {
+            alert(message);
+            setLoginUser(loggedInUser);
+            navigate('/dashboard');
+          }
         })
         .catch((error) => {
           if (error.response && error.response.data) {

@@ -81,6 +81,7 @@ const Dashboard = ({userId}) => {
         const Response = await axios.get('http://localhost:9002/totals', {
           params: { email: userId },
         });
+        console.log(Response.data.totalIncome)
         const { totalIncome } = Response.data.totalIncome;
         setTotalIncome(totalIncome);
   

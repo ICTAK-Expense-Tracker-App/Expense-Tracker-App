@@ -306,32 +306,34 @@ app.get('/transactions', async (req, res) => {
 app.get('/totals', async (req, res) => {
   try {
     // Get the user ID from the decoded token
-    const userId = req.query.email
+    const email = req.query.email;
 
-    // Find the user with the provided ID
-    const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    // Fetch the user's transactions
+    const transactions = await Expense.find({ email }).exec();
+
     // Calculate the total income and expense
     let totalIncome = 0;
     let totalExpense = 0;
 
-    user.transactions.forEach(transaction => {
-      if (transaction.type === 'income') {
-        totalIncome += transaction.amount;
-      } else if (transaction.type === 'expense') {
-        totalExpense += transaction.amount;
+    transactions.forEach(transactions => {
+      if (transactions.type === 'income') {
+        totalIncome += transactions.amount;
+      } else if (transactions.type === 'expense') {
+        totalExpense += transactions.amount;
       }
     });
-
+    
     res.status(200).json({ totalIncome, totalExpense });
   } catch (error) {
     res.status(500).json({ message: 'Error occurred while calculating totals', error: error.message });
   }
 });
+
 
 
 
