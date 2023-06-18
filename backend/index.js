@@ -65,46 +65,35 @@ app.delete('/delete/:id', async (req, res) => {
 
 
 
-  app.post('/SignUp', (req, res) => {
-    const { name, place, education, age, email, no, password, reEnterPassword } = req.body;
-  
-    // Check if the passwords match
-    if (password !== reEnterPassword) {
-      return res.status(400).json({ message: 'Passwords do not match' });
-    }
-  
-    // Check if the email already exists
-    User.findOne({ email }, (err, existingUser) => {
-      if (err) {
-        return res.status(500).json({ message: 'Error occurred during signup', error: err.message });
-      }
-      if (existingUser) {
-        return res.status(409).json({ message: 'Email already registered. Please enter a different email' });
-      }
-  
-      // Create a new user instance
-      const newUser = new User({
-        name,
-        place,
-        education,
-        age,
-        email,
-        no,
-        password,
-      });
-  
-      // Save the user to the database
-      newUser
-        .save()
-        .then(() => {
-          res.status(200).json({ message: 'User registered successfully' });
-        })
-        .catch((error) => {
-          res.status(500).json({ message: 'Failed to register user', error });
-        });
-    });
+app.post('/SignUp', (req, res) => {
+  const { name, place,education, age, email, no, password, reEnterPassword } = req.body;
+
+  // Check if the passwords match
+  if (password !== reEnterPassword) {
+    return res.status(400).json({ message: 'Passwords do not match' });
+  }
+
+  // Create a new user instance
+  const newUser = new User({
+    name: req.body.name,
+    place: req.body.place,
+    education:req.body.education,
+    age: req.body.age,
+    email: req.body.email,
+    no: req.body.no,
+    password: req.body.password,
+    reEnterPassword: req.body.reEnterPassword
   });
-  
+  newUser
+  .save()
+  .then(() => {
+    res.status(200).json({ message: 'User registered successfully' });
+  })
+  .catch((error) => {
+    res.status(500).json({ message: 'Failed to register user', error });
+  });
+});
+
   
   
 
@@ -349,7 +338,9 @@ app.get('/checkEmail', async (req, res) => {
       return res.status(409).json({ message: 'Email already registered. Please enter a different email' });
     }
 
-    res.status(200).json({ message: 'Email is valid' });
+    res.status(200).json(
+      { message: 'Validating email...' }
+      );
   } catch (err) {
     res.status(500).json({ message: 'Error occurred during email validation', error: err.message });
   }

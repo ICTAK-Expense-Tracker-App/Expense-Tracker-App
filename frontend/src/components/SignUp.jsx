@@ -20,11 +20,12 @@ const SignUp = () => {
     no: '',
     password: '',
     reEnterPassword: '',
-    education: '', // New field for Education
+    education: '',
   });
 
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [formError, setFormError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,31 +35,56 @@ const SignUp = () => {
     }));
   };
 
-  const handleEmailValidation = () => {
+  const handleEmailValidation = (password, reEnterPassword) => {
     axios
       .get('http://localhost:9002/checkEmail', { params: { email: user.email } })
       .then((res) => {
-        alert(res.data.message);
-        // Proceed with the form submission if the email is valid
-        handleFormSubmit();
+        if (res.data.exists) {
+          alert('Email is already registered. Please use a different email.');
+        } else {
+          alert(res.data.message);
+          if (user.name && user.email && user.password && password === reEnterPassword) {
+            axios
+              .post('http://localhost:9002/SignUp', user)
+              .then((res) => {
+                alert(res.data.message);
+                navigate('/Login');
+              })
+              .catch((err) => {
+                console.log('Error occurred while registering user:', err);
+                alert('Failed to register user. Please try again later.');
+              });
+          } else {
+            setFormError('Please fill in all the required fields and make sure the passwords match.');
+          }
+        }
       })
       .catch((err) => {
-        if (err.response && err.response.status === 409) {
-          alert(err.response.data.message);
-        } else {
-          console.log('Error occurred while checking email:', err);
-          alert('Failed to check email. Please try again later.');
-        }
+        console.log('Error occurred while checking email:', err);
+        alert('Email is already registered. Please use a different email.');
       });
   };
 
+  const handleUserRegistration = async (password, reEnterPassword) => {
+    try {
+      if (user.name && user.email && user.password && password === reEnterPassword) {
+        await axios.post('http://localhost:9002/SignUp', user);
+        alert('User registered successfully');
+        navigate('/Login');
+      } else {
+        setFormError('Please fill in all the required fields and make sure the passwords match.');
+      }
+    } catch (error) {
+      console.log('Error occurred while registering user:', error);
+      alert('Failed to register user. Please try again later.');
+    }
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-  
+
     const { password, reEnterPassword } = user;
-  
-    // Password constraints validation
+
     const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
     if (!passwordRegex.test(password)) {
       setPasswordError(
@@ -66,132 +92,136 @@ const SignUp = () => {
       );
       return;
     }
-  
-    // Phone number validation
+
     const phoneNumberRegex = /^\d{10}$/;
     if (!phoneNumberRegex.test(user.no)) {
       alert('Phone number must be 10 digits long');
       return;
     }
-  
-    // Check email validity before submitting the form
-    handleEmailValidation();
+
+    handleEmailValidation(password, reEnterPassword);
   };
-  
-  
-  
 
- return (
-  <Grid className="Sig" container justifyContent="center">
-    <Paper style={paperStyle}>
-      <Grid align="center">
-        <Avatar style={avatarStyle}>
-          <AddCircleOutlineOutlinedIcon />
-        </Avatar>
-        <Typography variant="h5" style={headerStyle}>
-          Sign Up
-        </Typography>
-        <Typography variant="caption" gutterBottom>
-          Please fill this form to create an account!
-        </Typography>
-      </Grid>
-      <form onSubmit={handleEmailValidation}>
-        <TextField
-          fullWidth
-          label="Name"
-          name="name"
-          value={user.name}
-          placeholder="Enter your name"
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          label="Place"
-          name="place"
-          value={user.place}
-          placeholder="Enter your place"
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          label="Education"
-          name="education"
-          value={user.education}
-          placeholder="Enter your education"
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          label="Age"
-          name="age"
-          value={user.age}
-          placeholder="Enter your age"
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          label="Email"
-          name="email"
-          value={user.email}
-          placeholder="Enter your email"
-          onChange={handleChange}
-        />
-        {emailError && (
-          <Typography variant="caption" color="error" gutterBottom>
-            {emailError}
+  return (
+    <Grid className="Sig" container justifyContent="center">
+      <Paper style={paperStyle}>
+        <Grid align="center">
+          <Avatar style={avatarStyle}>
+            <AddCircleOutlineOutlinedIcon />
+          </Avatar>
+          <Typography variant="h5" style={headerStyle}>
+            Sign Up
           </Typography>
-        )}
-        <TextField
-          fullWidth
-          label="Phone Number"
-          name="no"
-          value={user.no}
-          placeholder="Enter your phone number"
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          label="Password"
-          name="password"
-          value={user.password}
-          placeholder="Enter your password"
-          type="password"
-          onChange={handleChange}
-        />
-        {passwordError && (
-          <Typography variant="caption" color="error" gutterBottom>
-            {passwordError}
+          <Typography variant="caption" gutterBottom>
+            Please fill this form to create an account!
           </Typography>
-        )}
-        <TextField
-          fullWidth
-          label="Confirm Password"
-          name="reEnterPassword"
-          value={user.reEnterPassword}
-          placeholder="Confirm your password"
-          type="password"
-          onChange={handleChange}
-        />
-        <FormControlLabel
-          control={<CheckBox name="checkedA" />}
-          label="I accept the terms and conditions."
-        />
-        <br />
-        <Button type="submit" variant="contained" color="primary">
-          Sign up
-        </Button>
-        <div className="signup-link">
-          <span>Already have an account?</span>
-          <a href="http://localhost:3000/Login" className="black-link">
-            Login to your account
-          </a>
-        </div>
-      </form>
-    </Paper>
-  </Grid>
-);
-
-
-       
+        </Grid>
+        <form onSubmit={handleFormSubmit}>
+          <TextField
+            fullWidth
+            label="Name"
+            name="name"
+            value={user.name}
+            placeholder="Enter your name"
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Place"
+            name="place"
+            value={user.place}
+            placeholder="Enter your place"
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Education"
+            name="education"
+            value={user.education}
+            placeholder="Enter your education"
+            onChange={handleChange}
+          />
+          <TextField
+            fullWidth
+            label="Age"
+            name="age"
+            value={user.age}
+            placeholder="Enter your age"
+            onChange={handleChange}
+          />
+          <TextField
+            fullWidth
+            label="Email"
+            name="email"
+            value={user.email}
+            placeholder="Enter your email"
+            onChange={handleChange}
+            required
+          />
+          {emailError && (
+            <Typography variant="caption" color="error" gutterBottom>
+              {emailError}
+            </Typography>
+          )}
+          <TextField
+            fullWidth
+            label="Phone Number"
+            name="no"
+            value={user.no}
+            placeholder="Enter your phone number"
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Password"
+            name="password"
+            value={user.password}
+            placeholder="Enter your password"
+            type="password"
+            onChange={handleChange}
+            required
+          />
+          {passwordError && (
+            <Typography variant="caption" color="error" gutterBottom>
+              {passwordError}
+            </Typography>
+          )}
+          <TextField
+            fullWidth
+            label="Confirm Password"
+            name="reEnterPassword"
+            value={user.reEnterPassword}
+            placeholder="Confirm your password"
+            type="password"
+            onChange={handleChange}
+            required
+          />
+          <FormControlLabel
+            control={<CheckBox name="checkedA" />}
+            label="I accept the terms and conditions."
+          />
+          {formError && (
+            <Typography variant="caption" color="error" gutterBottom>
+              {formError}
+            </Typography>
+          )}
+          <br />
+          <Button type="submit" variant="contained" color="primary">
+            Sign up
+          </Button>
+          <div className="signup-link">
+            <span>Already have an account?</span>
+            <a href="http://localhost:3000/Login" className="black-link">
+              Login to your account
+            </a>
+          </div>
+        </form>
+      </Paper>
+    </Grid>
+  );
 };
-export default SignUp  
+
+export default SignUp;
