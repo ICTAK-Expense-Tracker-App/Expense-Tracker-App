@@ -36,14 +36,40 @@ const Dashboard = ({ userId }) => {
   };
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [transactionType, setTransactionType] = useState('');
-  const [transactionAmount, setTransactionAmount] = useState('');
-  const [transactionNote, setTransactionNote] = useState('');
-  const [transactionDate, setTransactionDate] = useState('');
+  // Update the initial state of the edit transaction variables
+const [transactionType, setTransactionType] = useState(editTransaction.type);
+const [transactionAmount, setTransactionAmount] = useState(editTransaction.amount);
+const [transactionNote, setTransactionNote] = useState(editTransaction.note);
+const [transactionDate, setTransactionDate] = useState(editTransaction.date);
+
   const [transactionData, setTransactionData] = useState([]);
   const [user, setUser] = useState({});
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
+  const handleTransactionTypeChange = (event) => {
+    const { value } = event.target;
+    setTransactionType(value);
+    setEditTransaction((prevState) => ({ ...prevState, type: value }));
+  };
+  
+  const handleTransactionAmountChange = (event) => {
+    const { value } = event.target;
+    setTransactionAmount(value);
+    setEditTransaction((prevState) => ({ ...prevState, amount: value }));
+  };
+  
+  const handleTransactionNoteChange = (event) => {
+    const { value } = event.target;
+    setTransactionNote(value);
+    setEditTransaction((prevState) => ({ ...prevState, note: value }));
+  };
+  
+  const handleTransactionDateChange = (event) => {
+    const { value } = event.target;
+    setTransactionDate(value);
+    setEditTransaction((prevState) => ({ ...prevState, date: value }));
+  };
+  
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -98,7 +124,7 @@ const handleUpdateTransactions = async () => {
 
     if (response.status === 200) {
       console.log('Transaction updated successfully');
-      // Update the transaction data with the updated transaction
+      const updatedTransaction = response.data;
       const updatedTransactions = transactionData.map((transaction) =>
         transaction._id === editTransaction._id ? editTransaction : transaction
       );
@@ -119,21 +145,7 @@ const handleUpdateTransactions = async () => {
 
 
 
-  const handleTransactionTypeChange = (event) => {
-    setTransactionType(event.target.value);
-  };
 
-  const handleTransactionAmountChange = (event) => {
-    setTransactionAmount(event.target.value);
-  };
-
-  const handleTransactionNoteChange = (event) => {
-    setTransactionNote(event.target.value);
-  };
-
-  const handleTransactionDateChange = (event) => {
-    setTransactionDate(event.target.value);
-  };
 
   const fetchIncomeAndExpenses = async () => {
     try {

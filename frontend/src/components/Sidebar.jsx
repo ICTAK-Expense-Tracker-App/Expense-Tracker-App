@@ -23,6 +23,7 @@ const Sidebar = ({ handleOptionSelect }) => {
   return (
     <div className="sidebar">
       <div className="user-profile">
+      
         <span>{username}</span>
       </div>
       <div className="sidebar-buttons"><br />

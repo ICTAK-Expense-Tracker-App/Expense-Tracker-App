@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
+  //const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(true); // Replace `true` with the initial login status of the admin
 
   useEffect(() => {
     // Fetch the list of registered users from the server
