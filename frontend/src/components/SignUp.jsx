@@ -5,9 +5,11 @@ import { CheckBox } from '@mui/icons-material';
 import './SignUp.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import mainImage from "../assets/main.jpg";
+import main from "../assets/main.jpg";
 
 const SignUp = () => {
-  const paperStyle = { padding: 15, width: 500, margin: '0 auto' };
+  const paperStyle = { padding: 15, width: '70%', margin: '0 auto' };
   const headerStyle = { margin: 0 };
   const avatarStyle = { backgroundColor: '#1bbd7e' };
   const navigate = useNavigate();
@@ -103,9 +105,10 @@ const SignUp = () => {
   };
 
   return (
-    <Grid className="Sig" container justifyContent="center">
-      <Paper style={paperStyle}>
-        <Grid align="center">
+    <div className="page-container" style={{ backgroundImage: `url(${main})` }}>
+    <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
+      <Grid item xs={6}>
+        <Paper style={paperStyle}>
           <Avatar style={avatarStyle}>
             <AddCircleOutlineOutlinedIcon />
           </Avatar>
@@ -115,112 +118,118 @@ const SignUp = () => {
           <Typography variant="caption" gutterBottom>
             Please fill this form to create an account!
           </Typography>
-        </Grid>
-        <form onSubmit={handleFormSubmit}>
-          <TextField
-            fullWidth
-            label="Name"
-            name="name"
-            value={user.name}
-            placeholder="Enter your name"
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            fullWidth
-            label="Place"
-            name="place"
-            value={user.place}
-            placeholder="Enter your place"
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            fullWidth
-            label="Education"
-            name="education"
-            value={user.education}
-            placeholder="Enter your education"
-            onChange={handleChange}
-          />
-          <TextField
-            fullWidth
-            label="Age"
-            name="age"
-            value={user.age}
-            placeholder="Enter your age"
-            onChange={handleChange}
-          />
-          <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            value={user.email}
-            placeholder="Enter your email"
-            onChange={handleChange}
-            required
-          />
-          {emailError && (
-            <Typography variant="caption" color="error" gutterBottom>
-              {emailError}
-            </Typography>
-          )}
-          <TextField
-            fullWidth
-            label="Phone Number"
-            name="no"
-            value={user.no}
-            placeholder="Enter your phone number"
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            fullWidth
-            label="Password"
-            name="password"
-            value={user.password}
-            placeholder="Enter your password"
-            type="password"
-            onChange={handleChange}
-            required
-          />
-          {passwordError && (
-            <Typography variant="caption" color="error" gutterBottom>
-              {passwordError}
-            </Typography>
-          )}
-          <TextField
-            fullWidth
-            label="Confirm Password"
-            name="reEnterPassword"
-            value={user.reEnterPassword}
-            placeholder="Confirm your password"
-            type="password"
-            onChange={handleChange}
-            required
-          />
-          <FormControlLabel
-            control={<CheckBox name="checkedA" />}
-            label="I accept the terms and conditions."
-          />
-          {formError && (
-            <Typography variant="caption" color="error" gutterBottom>
-              {formError}
-            </Typography>
-          )}
-          <br />
-          <Button type="submit" variant="contained" color="primary">
-            Sign up
-          </Button>
-          <div className="signup-link">
-            <span>Already have an account?</span>
-            <a href="http://localhost:3000/Login" className="black-link">
-              Login to your account
-            </a>
-          </div>
-        </form>
-      </Paper>
+          <form onSubmit={handleFormSubmit}>
+            <TextField
+              fullWidth
+              label="Name"
+              name="name"
+              value={user.name}
+              placeholder="Enter your name"
+              onChange={handleChange}
+              required
+            />
+            <TextField
+              fullWidth
+              label="Place"
+              name="place"
+              value={user.place}
+              placeholder="Enter your place"
+              onChange={handleChange}
+              required
+            />
+            <TextField
+              fullWidth
+              label="Education"
+              name="education"
+              value={user.education}
+              placeholder="Enter your education"
+              onChange={handleChange}
+            />
+            <TextField
+              fullWidth
+              label="Age"
+              name="age"
+              value={user.age}
+              placeholder="Enter your age"
+              onChange={handleChange}
+            />
+            <TextField
+              fullWidth
+              label="Email"
+              name="email"
+              value={user.email}
+              placeholder="Enter your email"
+              onChange={handleChange}
+              required
+            />
+            {emailError && (
+              <Typography variant="caption" color="error" gutterBottom>
+                {emailError}
+              </Typography>
+            )}
+            <TextField
+              fullWidth
+              label="Phone Number"
+              name="no"
+              value={user.no}
+              placeholder="Enter your phone number"
+              onChange={handleChange}
+              required
+            />
+            <TextField
+              fullWidth
+              label="Password"
+              name="password"
+              value={user.password}
+              placeholder="Enter your password"
+              type="password"
+              onChange={handleChange}
+              required
+            />
+            {passwordError && (
+              <Typography variant="caption" color="error" gutterBottom>
+                {passwordError}
+              </Typography>
+            )}
+            <TextField
+              fullWidth
+              label="Confirm Password"
+              name="reEnterPassword"
+              value={user.reEnterPassword}
+              placeholder="Confirm your password"
+              type="password"
+              onChange={handleChange}
+              required
+            />
+            <FormControlLabel
+              control={<CheckBox name="checkedA" />}
+              label="I accept the terms and conditions."
+            />
+            {formError && (
+              <Typography variant="caption" color="error" gutterBottom>
+                {formError}
+              </Typography>
+            )}
+            <br />
+            <Button type="submit" variant="contained" color="primary" className="submit-button">
+              Sign up
+            </Button>
+            <div className="signup-link">
+              <span>Already have an account?</span>
+              <a href="http://localhost:3000/Login" className="black-link">
+                Login to your account
+              </a>
+            </div>
+          </form>
+          </Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <div className="image-container" style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+          <img src={mainImage} alt="Image" className="background-image" style={{ width: '600px', height: '500px', objectFit: 'cover' }} />
+        </div>
+      </Grid>
     </Grid>
+    </div>
   );
 };
 

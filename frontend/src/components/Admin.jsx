@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Table, TableCell, TableContainer, TableHead,TableBody, TableRow, Button } from '@mui/material';
 import axios from 'axios';
+import NavBar from './NavBar.jsx';
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
   //const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(true); // Replace `true` with the initial login status of the admin
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   useEffect(() => {
     // Fetch the list of registered users from the server
     axios
@@ -40,12 +42,24 @@ const Admin = () => {
         }))
         .catch(err=>console.log(err))
   };
-  
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setIsAdminLoggedIn(false);
+    axios
+      .post('/admin/logout')
+      .then((res) => {
+        console.log(res.data.message);
+        // Perform any additional actions after logout if needed
+      })
+      .catch((error) => {
+        console.log('Error occurred while logging out:', error);
+        // Handle any error that occurs while logging out
+      });
+  };
 
   return (
     <div>
       <h6 style={{ fontSize: '30px' }}>USER DETAILS</h6>
-
       <TableContainer>
         <Table>
           <TableHead>
