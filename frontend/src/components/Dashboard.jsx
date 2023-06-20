@@ -27,6 +27,10 @@ const Dashboard = ({ userId }) => {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const handleOpenEditDialog = (transaction) => {
     setEditTransaction(transaction);
+    setTransactionType(transaction.type);
+    setTransactionAmount(transaction.amount);
+    setTransactionNote(transaction.note);
+    setTransactionDate(transaction.date);
     setOpenEditDialog(true);
   };
   
@@ -72,6 +76,11 @@ const [transactionDate, setTransactionDate] = useState(editTransaction.date);
   
 
   const handleOpenDialog = () => {
+    setEditTransaction('');
+    setTransactionType('');
+    setTransactionAmount('');
+    setTransactionNote('');
+    setTransactionDate('');
     setOpenDialog(true) ;
   };
 
@@ -354,21 +363,3 @@ const handleUpdateTransactions = async () => {
 };
 
 export default Dashboard;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
