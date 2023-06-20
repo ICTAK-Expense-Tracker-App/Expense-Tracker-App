@@ -19,21 +19,20 @@ import './Transactions.css';
 const Dashboard = ({ userId }) => {
   const [selectedOption, setSelectedOption] = useState('');
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-  };
-
+  
+  const [isNewTransaction, setIsNewTransaction] = useState(false);
   const [editTransaction, setEditTransaction] = useState({});
   const [openEditDialog, setOpenEditDialog] = useState(false);
+  
   const handleOpenEditDialog = (transaction) => {
     setEditTransaction(transaction);
     setTransactionType(transaction.type);
     setTransactionAmount(transaction.amount);
     setTransactionNote(transaction.note);
     setTransactionDate(transaction.date);
+    setIsNewTransaction(false); // Set isNewTransaction to false for edit dialog
     setOpenEditDialog(true);
   };
-  
 
   const handleCloseEditDialog = () => {
     setOpenEditDialog(false);
@@ -54,6 +53,10 @@ const [transactionDate, setTransactionDate] = useState(editTransaction.date);
     const { value } = event.target;
     setTransactionType(value);
     setEditTransaction((prevState) => ({ ...prevState, type: value }));
+  };
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
   };
   
   const handleTransactionAmountChange = (event) => {
@@ -76,12 +79,25 @@ const [transactionDate, setTransactionDate] = useState(editTransaction.date);
   
 
   const handleOpenDialog = () => {
+    setIsNewTransaction(true);
     setOpenDialog(true);
   };
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
+
+  const resetTransactionState = () => {
+    setTransactionType('');
+    setTransactionAmount('');
+    setTransactionNote('');
+    setTransactionDate('');
+  };
+
+  useEffect(() => {
+    resetTransactionState(); // Reset transaction state when the dialog is opened
+  }, [isNewTransaction]); 
+
  useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -109,13 +125,14 @@ const [transactionDate, setTransactionDate] = useState(editTransaction.date);
         (transaction) => transaction._id !== transactionId
       );
       setTransactionData(updatedTransactions);
-      fetchIncomeAndExpenses(); // Update the income and expenses after deletion
+      fetchIncomeAndExpenses(); // Corrected function name
       alert('Transaction deleted successfully');
     } catch (error) {
       console.error('Error deleting transaction:', error);
       alert('Failed to delete transaction');
     }
   };
+  
   
 
 
@@ -146,26 +163,19 @@ const handleUpdateTransactions = async () => {
   handleCloseEditDialog();
 };
 
-
-
-
-
-
-  const fetchIncomeAndExpenses = async () => {
-    try {
-      const response = await axios.get('http://localhost:9002/totals', {
-        params: { email: userId },
-      });
-      console.log(response.data.totalIncome);
-      const { totalIncome } = response.data;
-      setTotalIncome(totalIncome);
-
-      const { totalExpense } = response.data;
-      setTotalExpenses(totalExpense);
-    } catch (error) {
-      console.error('Error fetching income and expenses:', error);
-    }
-  };
+const fetchIncomeAndExpenses = async () => {
+  try {
+    const response = await axios.get('http://localhost:9002/totals', {
+      params: { email: userId },
+    });
+    console.log(response.data.totalIncome);
+    const { totalIncome, totalExpense } = response.data; // Updated variable name
+    setTotalIncome(totalIncome);
+    setTotalExpenses(totalExpense); // Updated variable name
+  } catch (error) {
+    console.error('Error fetching income and expenses:', error);
+  }
+};
 
   useEffect(() => {
     if (userId) {
