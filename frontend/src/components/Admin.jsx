@@ -64,9 +64,9 @@ const Admin = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={{ color: 'greenyellow', fontSize: '40px' }}>NAME</TableCell>
-              <TableCell style={{ color: 'blue', fontSize: '40px' }}>EMAIL ID</TableCell>
-              <TableCell style={{ color: 'RED', fontSize: '40px' }}>ACCESS</TableCell>
+              <TableCell style={{ color: 'black', fontSize: '40px' }}>NAME</TableCell>
+              <TableCell style={{ color: 'black', fontSize: '40px' }}>EMAIL ID</TableCell>
+              <TableCell style={{ color: 'black', fontSize: '40px' }}>ACCESS</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
