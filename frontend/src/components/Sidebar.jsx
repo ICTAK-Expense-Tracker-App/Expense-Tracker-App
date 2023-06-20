@@ -43,7 +43,7 @@ const Sidebar = ({ handleOptionSelect }) => {
           to="/dashboard"
           className="customButton1"
         >
-          Income/Expenses
+          Income/Expense
         </Button>
       </div>
     </div>

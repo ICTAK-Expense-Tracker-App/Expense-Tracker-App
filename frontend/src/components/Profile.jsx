@@ -136,7 +136,7 @@ const Profile = ({ userId }) => {
       </div>
 
       <div className="profile-content">
-        <h1 className="profile-heading">Profile</h1>
+      <h1 className="profile-heading">PROFILE</h1>
 
         <div className="profile-details">
           <div className="profile-field">
@@ -233,12 +233,13 @@ const Profile = ({ userId }) => {
         <div className="button-container">
           {editing ? (
             <button className="profile-button" onClick={handleSave}>
-              Save
-            </button>
+            Save Changes
+          </button>
+          
           ) : (
             <button className="profile-button" onClick={handleEdit}>
-              Edit Profile
-            </button>
+            Edit Profile
+          </button>
           )}
 
           <button className="profile-button" onClick={handleOpenDialog}>

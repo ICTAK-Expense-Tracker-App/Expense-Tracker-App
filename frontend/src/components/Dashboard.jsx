@@ -133,7 +133,7 @@ const handleUpdateTransactions = async () => {
         transaction._id === editTransaction._id ? editTransaction : transaction
       );
       setTransactionData(updatedTransactions);
-     
+      fetchIncomeAndExpenses(); 
       alert('Transaction updated successfully');
     } else {
       console.log('Failed to update transaction');
@@ -233,11 +233,11 @@ const handleUpdateTransactions = async () => {
             <p>{totalIncome}</p>
           </div>
           <div className="summary-box">
-            <h3>Total Expenses</h3>
+            <h3>Total Expense</h3>
             <p>{totalExpenses}</p>
           </div>
         </div>
-        <h1>Income and Expenses</h1>
+        <h1>Income and Expense</h1>
         <Button
           variant="contained"
           color="primary"
@@ -247,42 +247,45 @@ const handleUpdateTransactions = async () => {
           + Add new Transaction
         </Button>
 
-        <Dialog open={openDialog} onClose={handleCloseDialog}>
-          <DialogTitle>Add Transaction</DialogTitle>
-          <DialogContent>
-           <Select value={transactionType} onChange={handleTransactionTypeChange}>
-              <MenuItem value="expense">Expense</MenuItem>
-              <MenuItem value="income">Income</MenuItem>
-            </Select>
-            <TextField
-              label="Amount"
-              type="number"
-              value={transactionAmount}
-              onChange={handleTransactionAmountChange}
-            />
-            <TextField
-              label="Note"
-              value={transactionNote}
-              onChange={handleTransactionNoteChange}
-            />
-            <TextField
-              label="Date"
-              type="date"
-              value={transactionDate}
-              onChange={handleTransactionDateChange}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleAddTransaction} color="primary">
-              Add
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <Dialog open={openDialog} onClose={handleCloseDialog} fullWidth>
+  <DialogTitle>Add New Transaction</DialogTitle>
+  <DialogContent className="dialog-content">
+    <Select value={transactionType} onChange={handleTransactionTypeChange}>
+      <MenuItem value="expense">Expense</MenuItem>
+      <MenuItem value="income">Income</MenuItem>
+    </Select>
+    <TextField
+      label="Amount"
+      type="number"
+      value={transactionAmount}
+      onChange={handleTransactionAmountChange}
+    />
 
-        <table>
+    <TextField
+      label="Date"
+      type="date"
+      value={transactionDate}
+      onChange={handleTransactionDateChange}
+    />
+
+    <TextField
+      label="Note"
+      value={transactionNote}
+      onChange={handleTransactionNoteChange}
+    />
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleCloseDialog} color="primary">
+      Cancel
+    </Button>
+    <Button onClick={handleAddTransaction} color="primary">
+      Add
+    </Button>
+  </DialogActions>
+</Dialog>
+
+
+        <table className='tablestyle'>
           <thead>
             <tr>
               <th>Type</th>
@@ -292,24 +295,25 @@ const handleUpdateTransactions = async () => {
             </tr>
           </thead>
           <tbody>
-            {transactionData.map((transaction, index) => (
-              <tr key={index}>
-                <td>{transaction.type}</td>
-                <td>{transaction.amount}</td>
-                <td>{transaction.note}</td>
-                <td>{transaction.date}</td>
-                <td>
-                  <button onClick={() => handleOpenEditDialog(transaction)}>
-                    <Edit />
-                  </button>
-                </td>
-                 <td>
-                  <button onClick={() => handleDeleteTransaction(transaction._id)}> 
-                    <Delete />
-                  </button>
-                </td>
-              </tr>
-            ))}
+          {transactionData.map((transaction, index) => (
+          <tr key={index} className={transaction.type === 'income' ? 'income' : 'expense'}>
+            <td>{transaction.type}</td>
+            <td>{transaction.amount}</td>
+            <td>{transaction.note}</td>
+            <td>{transaction.date}</td>
+            <td>
+              <button onClick={() => handleOpenEditDialog(transaction)}>
+                <Edit />
+              </button>
+            </td>
+            <td>
+              <button onClick={() => handleDeleteTransaction(transaction._id)}> 
+                <Delete />
+              </button>
+            </td>
+          </tr>
+        ))}
+
           </tbody>
         </table>
 

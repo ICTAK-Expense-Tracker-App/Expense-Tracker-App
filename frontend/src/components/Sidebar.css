@@ -12,20 +12,20 @@
   
   .addnew-heading {
     font-size: 2rem;
-    color: #333;
+    color: black;
   }
   
   .addnew-link {
     font-size: 1.2rem;
-    color: #333;
+    color: black;
     text-decoration: none;
   }
 
   .sidebar {
-    width: 20px;
-    height:100%;
-    background-color: rgb(36, 45, 53);
-  }
+  width: 100%;
+  height: 200%;
+  background-color: black;
+}
   
   .user-profile {
     margin-bottom: 20px;
@@ -34,18 +34,26 @@
   
   
   .sidebar-buttons  {
-    display: block;
-    margin-bottom: 10px;
-    padding: 10px 20px;
-    font-size: 20px;
-    background-color:rgb(36, 45, 53) ; /* Set the background color to transparent */
-    border: none;
-    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 4px;
     cursor: pointer;
-    color: white; /* Set the font color to white */
+    transition: background-color 0.3s ease;
   }
-  .customButton1{
-    background-color:transparent ;
-    color: rgb(249, 254, 255);
-    font-size: 20px;
+  
+  .customButton1 {
+    background-color: transparent;
+    color:white !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    padding: 12px 24px;
+    border: 2px solid rgb(0, 128, 128);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
+  
+  

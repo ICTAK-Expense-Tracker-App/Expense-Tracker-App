@@ -1,51 +1,148 @@
+/* Container styles */
 .dashboard-container {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  background-color: #f0f0f0;
- 
+  background-color: white;
   height: 100vh;
 }
 
-.sb{
+.sb {
   width: 20%;
-  height:100%;
-  background-color: rgb(36, 45, 53);
+  height: 100%;
+  background-color: #293d35;
 }
 
 .dashboard-content {
   width: 80%;
-  
-  /* padding: 20%; */
-  border-radius: 5px;
+  padding: 1rem;
 }
 
-.dashboard-content h2 {
+/* Heading styles */
+.dashboard-content h1 {
   margin: 0;
+  font-size: 28px;
+  color: black;
+  margin-bottom: 20px;
 }
 
+/* Summary box styles */
 .summary-container {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  padding-top: 7%;
-  padding-left: 3%;
+  padding-top: 4%;
+  padding-left: 1%;
 }
 
 .summary-box {
   width: 40%;
-  background-color: #c2d4d4;
-  /* padding: 10px; */
-  
-  border-radius: 5px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .summary-box h3 {
   margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2cap solid ;
+  color: rgb(0, 128,128);
 }
 
 .summary-box p {
   font-weight: bold;
   font-size: 18px;
-  color: rgb(41, 65, 57);
+  color: #293d35;
 }
+
+/* Add button styles */
+.add-button {
+  padding-top: 1% !important;
+  background-color: #008080 !important;
+  color: #fff !important;
+  font-weight: bold;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.add-button:hover {
+  background-color: #006666 !important;
+}
+
+/* Table styles */
+.tablestyle {
+  padding: 10px;
+  border: 3px solid white;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.tablestyle th,
+.tablestyle td {
+  padding: 8px;
+  text-align: left;
+}
+
+.tablestyle th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  color: #293d35;
+}
+
+.tablestyle td {
+  color: #293d35;
+}
+
+.tablestyle tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+/* Edit and delete button styles */
+.edit-button,
+.delete-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  color: #008080;
+}
+
+/* Dialog styles */
+.MuiDialog-paper {
+  width: 400px;
+  border-radius: 8px;
+}
+
+.MuiDialogTitle-root {
+  background-color: #008080;
+  color: #fff;
+  padding: 16px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.MuiDialogContent-root {
+  padding: 16px;
+}
+
+.MuiDialogActions-root {
+  padding: 16px;
+  justify-content: flex-end;
+}
+
+/* Income and Expense styles */
+.income {
+  background-color: #c4e1ff !important; /* Blue color for income */
+}
+
+.expense {
+  background-color: #ffb8b8 !important; /* Red color for expense */
+}
+
+

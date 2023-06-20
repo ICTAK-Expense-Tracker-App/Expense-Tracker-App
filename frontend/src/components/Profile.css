@@ -1,42 +1,41 @@
 .profile-page {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: left;
   background-color: #f0f0f0;
   height: 100vh;
 }
 
-.sb {
-  width: 20%;
-  height: 100%;
-  background-color: rgb(36, 45, 53);
+.profile-content {
+  background-image: url('../assets/profile.jpg');
+  background-size: cover; /* Adjust the background size to cover the container */
+  background-repeat: no-repeat; /* Prevent the background image from repeating */
+  background-position: right; /* Center the background image */
+  width: 150%;
+  max-width: 1000px;
+  padding: 2rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
 }
 
-.profile-content {
-  width: 80%;
-  padding: 2rem;
-}
 
 .profile-heading {
-  font-size: 2.5rem;
-  color: #333;
-}
-
-.profile-details {
-  padding-left: 15%;
+  font-size: 3rem;
+  color: black;
+  margin-bottom: 2rem;
+  font-weight: bold
 }
 
 .profile-field {
-  margin-bottom: 1rem;
-  display: flex;
-  
+  margin-bottom: 1.5rem;
 }
 
 .profile-field label {
-  display: flex;
+  display: block;
+  font-size: 1.5rem;
+  color: black;
   margin-bottom: 0.5rem;
-  font-size: 1rem;
-  color: #333;
+  font-weight: bold;
 }
 
 .profile-field input {
@@ -45,10 +44,13 @@
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-weight: bold
 }
 
-.button-container {
-  margin-bottom: 2rem;
+.profile-value {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
 }
 
 .profile-button {
@@ -56,14 +58,14 @@
   margin: 0.5rem;
   font-size: 1rem;
   color: #fff;
-  background-color: #333;
+  background-color: rgb(0, 128, 128);
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.profile-link {
-  font-size: 1rem;
-  color: #333;
-  text-decoration: none;
+.profile-wallpaper {
+  background-image: url('../assets/profile.jpg');
+  background-size: cover;
+  background-position: center;
 }
