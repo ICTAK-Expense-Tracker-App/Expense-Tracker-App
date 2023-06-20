@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import logoo from '../assets/logoo.jpg';
 
-const NavBar = ({ isLoggedIn, handleLogout }) => {
+const NavBar = ({ isLoggedIn, isAdmin, handleLogout }) => {
   const [buttonColor, setButtonColor] = useState(localStorage.getItem('buttonColor') || 'green');
   const navigate = useNavigate();
 
@@ -35,6 +35,11 @@ const NavBar = ({ isLoggedIn, handleLogout }) => {
             </>
           ) : (
             <>
+              {isAdmin && (
+                <Button component={Link} to="/Admin" variant="contained" className="customButton">
+                  Admin Page
+                </Button>
+              )}
               <Button variant="contained" className="customButton" onClick={handleLogoutClick}>Logout</Button>
             </>
           )}
