@@ -1,6 +1,6 @@
 # Expense Tracker App
 
-![Expense Tracker App](insert_app_image_url_here)
+
 
 ## Overview
 
