@@ -41,4 +41,4 @@ The Expense Tracker App is a user-friendly web application that helps individual
 
 ---
 
-Thank you for using the Expense Tracker App!
+Thank you for using the Expense Tracker App! 😊
